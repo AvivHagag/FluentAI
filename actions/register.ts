@@ -5,9 +5,14 @@ import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { RegisterSchema } from "@/schemas";
 import { generateVerficiationToken } from "@/lib/tokens";
+import { UserRole } from "@prisma/client";
 
-export const register = async (values: z.infer<typeof RegisterSchema>) => {
+export const register = async (
+  values: z.infer<typeof RegisterSchema>,
+  roleSelected: string
+) => {
   const validatedFields = RegisterSchema.safeParse(values);
+  console.log("start!");
 
   if (!validatedFields.success) {
     return { error: "שדות לא חוקיים!" };
@@ -25,6 +30,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       name,
       email,
       password: hashedPassword,
+      role: roleSelected as UserRole,
     },
   });
 

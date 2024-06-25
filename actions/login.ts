@@ -2,9 +2,14 @@
 import * as z from "zod";
 import { LoginSchema } from "@/schemas";
 import { signIn } from "../auth";
-import { DEFAULT_LOGIN_REDIRECT } from "../routes";
+import {
+  ADMIN_LOGIN_REDIRECT,
+  STUDENT_LOGIN_REDIRECT,
+  TEACHER_LOGIN_REDIRECT,
+} from "../routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
+
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
 
@@ -14,16 +19,28 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   const { email, password } = validatedFields.data;
 
-  // const existingUser = await getUserByEmail(email);
-  // if (!existingUser) {
-  //   return { error: "שם משתמש/סיסמא לא נכונים" };
-  // }
+  const existingUser = await getUserByEmail(email);
+  if (!existingUser) {
+    return { error: "שם משתמש/סיסמא לא נכונים" };
+  }
+
+  let UrlRedirect;
+  switch (existingUser.role) {
+    case "ADMIN":
+      UrlRedirect = ADMIN_LOGIN_REDIRECT;
+      break;
+    case "TEACHER":
+      UrlRedirect = TEACHER_LOGIN_REDIRECT;
+      break;
+    default:
+      UrlRedirect = STUDENT_LOGIN_REDIRECT;
+  }
 
   try {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: UrlRedirect,
     });
   } catch (error) {
     if (error instanceof AuthError) {

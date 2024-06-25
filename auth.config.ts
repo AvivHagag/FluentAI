@@ -1,9 +1,13 @@
 import Credentials from "next-auth/providers/credentials";
 import type { NextAuthConfig } from "next-auth";
 import { LoginSchema } from "./schemas/index";
-import { getUserByEmail } from "./data/user";
+import { getUserByEmail, getUserById } from "./data/user";
 import bcrypt from "bcryptjs";
 import Google from "next-auth/providers/google";
+import { UserRole } from "@prisma/client";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { db } from "./lib/db";
+
 export default {
   providers: [
     Google({
@@ -26,4 +30,27 @@ export default {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+        session.user.role = token.role as UserRole;
+      }
+
+      return session;
+    },
+    async jwt({ token }) {
+      if (!token.sub) return token;
+
+      const user = await getUserById(token.sub);
+      if (!user) return token;
+
+      token.role = user.role;
+
+      return token;
+    },
+  },
+  adapter: PrismaAdapter(db),
+  jwt: { maxAge: 365 * 24 * 60 * 60 },
+  session: { strategy: "jwt", maxAge: 365 * 24 * 60 * 60 },
 } satisfies NextAuthConfig;

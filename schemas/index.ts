@@ -1,5 +1,11 @@
 import * as z from "zod";
 
+export const NewPasswordSchema = z.object({
+  password: z.string().min(6, {
+    message: "אנא הכנס מינימום 6 ספרות",
+  }),
+});
+
 export const ResetSchema = z.object({
   email: z.string().email({
     message: "אימייל לא תקין",

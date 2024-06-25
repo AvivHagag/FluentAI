@@ -30,6 +30,11 @@ export default {
       },
     }),
   ],
+  pages: {
+    signIn: "/auth/login",
+    signOut: "/auth/login",
+    error: "/auth/error",
+  },
   callbacks: {
     async session({ session, token }) {
       if (token.sub && session.user) {

@@ -1,7 +1,9 @@
-// import { auth } from "next-auth/react";
+// import { auth } from "@/auth";
 
-// export const useCurrentRole = () => {
-//   const session = getSession();
-
-//   return session.
+// export const useCurrentRole = async () => {
+//   const session = await auth();
+//   if (session?.user.role) {
+//     return session?.user.role;
+//   }
+//   return null;
 // };

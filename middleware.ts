@@ -26,7 +26,6 @@ export default auth((req): any => {
   const isAdminRoute = nextUrl.pathname.startsWith(adminRoutes);
   const isTeacherRoute = nextUrl.pathname.startsWith(teacherRoutes);
   const isStudentRoute = nextUrl.pathname.startsWith(studentRoutes);
-  console.log(isStudentRoute);
 
   if (isApiAuthRoute) {
     return null;
@@ -34,25 +33,20 @@ export default auth((req): any => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(TEACHER_LOGIN_REDIRECT, nextUrl));
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
     return null;
   }
 
   if (!isLoggedIn) {
     return Response.redirect(new URL("/auth/login", nextUrl));
-  } else if (isAdminRoute && userRole !== "ADMIN") {
-    if (userRole !== "STUDENT") {
-      return Response.redirect(new URL(TEACHER_LOGIN_REDIRECT, nextUrl));
-    } else {
-      return Response.redirect(new URL(STUDENT_LOGIN_REDIRECT, nextUrl));
-    }
-  } else if (isTeacherRoute && userRole !== "TEACHER" && userRole !== "ADMIN") {
+  } else if (userRole === "ADMIN" && !isAdminRoute && !isPublicRoute) {
+    return Response.redirect(new URL(ADMIN_LOGIN_REDIRECT, nextUrl));
+  } else if (userRole === "STUDENT" && !isStudentRoute && !isPublicRoute) {
     return Response.redirect(new URL(STUDENT_LOGIN_REDIRECT, nextUrl));
-  } else if (isStudentRoute && userRole !== "STUDENT") {
+  } else if (userRole === "TEACHER" && !isTeacherRoute && !isPublicRoute) {
     return Response.redirect(new URL(TEACHER_LOGIN_REDIRECT, nextUrl));
   }
-
   return;
 });
 

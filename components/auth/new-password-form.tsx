@@ -50,7 +50,7 @@ const NewPasswordForm = () => {
     <CardWrapper
       headerLabel="הכנס סיסמא חדשה"
       backButtonLabel="חזרה להתחברות"
-      backButtonHref="/auth/login"
+      backButtonHref="/login"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import React, { useState } from "react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +19,7 @@ interface SigninButtonProps {
 }
 
 const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
+  const [open, setOpen] = useState(false);
   const nameParts = session.user.name?.split(" ");
   const userInitials =
     nameParts && nameParts.length >= 2
@@ -28,7 +29,10 @@ const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="flex items-center space-x-2 bg-transparent border">
+          <NavigationMenuTrigger
+            className="flex items-center space-x-2 bg-transparent border"
+            onClick={() => setOpen(!open)}
+          >
             <p className="text-darkRed" dir="rtl">
               {session.user.name}
             </p>
@@ -53,7 +57,10 @@ const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
               </>
             )}
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="shadow-lg rounded-lg p-4 bg-lightBeige">
+          <NavigationMenuContent
+            className="shadow-lg rounded-lg p-4 bg-lightBeige"
+            {...(open ? { style: { display: "block" } } : {})}
+          >
             <div className="w-32">
               <ul className="flex flex-col items-center space-y-2 text-sm sm:text-base">
                 {session.user.role === "ADMIN" && (
@@ -62,7 +69,7 @@ const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
                   </li>
                 )}
                 <li className="hover:text-naivyBlue hover:scale-105 dark:hover:text-glowGreen">
-                  <Link href="/settings">Settings</Link>
+                  <Link href="/setting">Settings</Link>
                 </li>
                 <Button
                   variant="destructive"

@@ -39,7 +39,7 @@ export default auth((req): any => {
   }
 
   if (!isLoggedIn) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+    return Response.redirect(new URL("/login", nextUrl));
   } else if (userRole === "ADMIN" && !isAdminRoute && !isPublicRoute) {
     return Response.redirect(new URL(ADMIN_LOGIN_REDIRECT, nextUrl));
   } else if (userRole === "STUDENT" && !isStudentRoute && !isPublicRoute) {

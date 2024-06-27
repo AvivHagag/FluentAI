@@ -53,7 +53,7 @@ const LoginForm = () => {
     <CardWrapper
       headerLabel="ברוך השב"
       backButtonLabel="אין לך משתמש עדין?"
-      backButtonHref="/auth/register"
+      backButtonHref="/register"
       showSocial
     >
       <Form {...form}>
@@ -97,7 +97,7 @@ const LoginForm = () => {
                     asChild
                     className="px-0 font-normal"
                   >
-                    <Link href="/auth/reset">שכחת את הסיסמא?</Link>
+                    <Link href="/reset">שכחת את הסיסמא?</Link>
                   </Button>
                   <FormMessage />
                 </FormItem>

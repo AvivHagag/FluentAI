@@ -20,17 +20,23 @@ import { FormSuccess } from "../form-success";
 import { RadioGroup } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { getAllTeachersNameAndID } from "@/lib/ServerActions/ServerActions";
-import { User } from "@prisma/client";
+import { Teacher } from "@prisma/client";
 import SyncLoader from "react-spinners/SyncLoader";
 import { register } from "@/actions/register";
+import { ComboboxDemo } from "./register-combobox";
+import { useRouter } from "next/navigation";
+import { LOGIN_REDIRECT } from "@/routes";
 
 const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
+  const [errorTeacher, setErrorTeacher] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [teachers, setTeachers] = useState<User[] | undefined>([]);
+  const [teachers, setTeachers] = useState<Teacher[] | undefined>([]);
+  const [teacherSelected, setTeacherSelected] = useState<string | null>(null);
   const [roleSelected, setRoleSelected] = useState<string>("TEACHER");
+  const router = useRouter();
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -45,7 +51,6 @@ const RegisterForm = () => {
       setIsLoading(true);
       getAllTeachersNameAndID()
         .then((teachersData) => {
-          console.log(teachersData);
           setTeachers(teachersData);
           setIsLoading(false);
         })
@@ -60,10 +65,21 @@ const RegisterForm = () => {
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
     setSuccess("");
+    if (roleSelected === "STUDENT") {
+      if (!teacherSelected) {
+        setErrorTeacher(true);
+        return;
+      }
+    }
     startTransition(() => {
-      register(values, roleSelected).then((data) => {
+      register(values, roleSelected, teacherSelected).then((data) => {
         setError(data.error);
         setSuccess(data.success);
+        if (data.success) {
+          setTimeout(() => {
+            router.push(LOGIN_REDIRECT);
+          }, 1000);
+        }
       });
     });
   };
@@ -72,7 +88,7 @@ const RegisterForm = () => {
     <CardWrapper
       headerLabel="צור משתמש"
       backButtonLabel="יש לך כבר משתמש?"
-      backButtonHref="/auth/login"
+      backButtonHref="/login"
       // showSocial
     >
       <Form {...form}>
@@ -183,7 +199,19 @@ const RegisterForm = () => {
                   </div>
                 ) : (
                   <div>
-                    <Label>TODO !!! Additional Info for Students</Label>
+                    {teachers ? (
+                      <ComboboxDemo
+                        teachers={teachers}
+                        teacherSelected={teacherSelected}
+                        setTeacherSelected={setTeacherSelected}
+                        setErrorTeacher={setErrorTeacher}
+                      />
+                    ) : null}
+                    {errorTeacher ? (
+                      <p className="text-[0.8rem] font-medium text-destructive">
+                        אנא בחר מורה
+                      </p>
+                    ) : null}
                   </div>
                 )}
               </>

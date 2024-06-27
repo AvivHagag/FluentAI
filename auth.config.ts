@@ -31,9 +31,9 @@ export default {
     }),
   ],
   pages: {
-    signIn: "/auth/login",
-    signOut: "/auth/login",
-    error: "/auth/error",
+    signIn: "/login",
+    signOut: "/login",
+    error: "/error",
   },
   callbacks: {
     async session({ session, token }) {

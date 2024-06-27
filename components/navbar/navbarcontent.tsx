@@ -37,7 +37,7 @@ const Navbarcontent: React.FC<NavbarcontentProps> = ({ Role }) => {
         </div>
       </div>
       <div
-        className={`absolute top-0 left-0 w-full h-full bg-white dark:bg-slate-950 p-8 z-20 md:hidden transition-transform ${
+        className={`absolute top-0 left-0 w-full h-full bg-grayish dark:bg-slate-950 p-8 z-20 md:hidden transition-transform ${
           imdobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

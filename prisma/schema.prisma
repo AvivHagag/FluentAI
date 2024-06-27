@@ -28,7 +28,8 @@ model User {
   password      String?
   role UserRole @default(STUDENT)
   accounts      Account[]
- 
+  student       Student?
+  teacher       Teacher?
   @@map("users")
 }
 
@@ -67,4 +68,24 @@ model PasswordResetToken {
   expires DateTime
 
   @@unique([email,token])
+}
+
+model Teacher {
+  id        String    @id @default(cuid())
+  name      String?
+  image     String?
+  students  Student[]
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String @unique
+}
+
+model Student {
+  id          String    @id @default(cuid())
+  name        String?
+  image       String?
+  grade       String?
+  teacher     Teacher   @relation(fields: [teacherId], references: [id],onDelete: Cascade)
+  teacherId   String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String @unique
 }

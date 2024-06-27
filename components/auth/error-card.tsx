@@ -5,7 +5,7 @@ export const ErrorCard = () => {
   return (
     <CardWrapper
       headerLabel="אופס! משהו השתבש"
-      backButtonHref="/auth/login"
+      backButtonHref="/login"
       backButtonLabel="חזרה לדף ההתחברות"
     >
       <div className="w-full flex items-center justify-center">

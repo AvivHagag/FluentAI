@@ -9,10 +9,10 @@ import { UserRole } from "@prisma/client";
 
 export const register = async (
   values: z.infer<typeof RegisterSchema>,
-  roleSelected: string
+  roleSelected: string,
+  teacherSelected: string | null
 ) => {
   const validatedFields = RegisterSchema.safeParse(values);
-  console.log("start!");
 
   if (!validatedFields.success) {
     return { error: "שדות לא חוקיים!" };
@@ -24,17 +24,38 @@ export const register = async (
   if (existingUser) {
     return { error: "האיימיל הזה כבר בשימוש!" };
   }
+  try {
+    const newUser = await db.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role: roleSelected as UserRole,
+      },
+    });
 
-  await db.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-      role: roleSelected as UserRole,
-    },
-  });
-
-  const verficationToken = await generateVerficiationToken(email);
+    if (roleSelected === "STUDENT" && teacherSelected) {
+      await db.student.create({
+        data: {
+          userId: newUser.id,
+          teacherId: teacherSelected,
+          name: newUser.name,
+          image: newUser.image ? newUser.image : null,
+        },
+      });
+    } else if (roleSelected === "TEACHER") {
+      await db.teacher.create({
+        data: {
+          userId: newUser.id,
+          name: newUser.name,
+          image: newUser.image ? newUser.image : null,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Failed to create user and profile:", error);
+    throw error;
+  }
 
   return { success: "המשתמש נוצר בהצלחה!" };
 };

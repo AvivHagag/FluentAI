@@ -1,13 +1,13 @@
-import React from "react";
-import Navbarcontent from "./navbarcontent";
-import { auth } from "@/auth";
-import SigninButton from "./signinbutton";
+import React from 'react'
+import Navbarcontent from './navbarcontent'
+import { auth } from '@/auth'
+import SigninButton from './signinbutton'
 // import SigninButton from "./SignInButton";
 // import SearchButton from "./SearchButton";
 
 const NavBar = async () => {
-  const session = await auth();
-  const Role = session?.user.role;
+  const session = await auth()
+  const Role = session?.user.role
   return (
     <header className="flex px-2 bg-mediumBeige">
       <div className="flex justify-between items-center w-full">
@@ -19,7 +19,7 @@ const NavBar = async () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar

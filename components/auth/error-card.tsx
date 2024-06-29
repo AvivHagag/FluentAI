@@ -5,6 +5,7 @@ export const ErrorCard = () => {
   return (
     <CardWrapper
       headerLabel="אופס! משהו השתבש"
+      headerTitle="!שגיאה"
       backButtonHref="/login"
       backButtonLabel="חזרה לדף ההתחברות"
     >

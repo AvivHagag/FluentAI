@@ -3,8 +3,8 @@ import React, { useState } from "react";
 // import NavigationComponent from "./NavigationComponent";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
+import LogoButton from "./logoButton";
 // import NavigationAccordion from "./NavigationAccordion";
-// import LogoChoose from "./LogoChoose";
 
 interface NavbarcontentProps {
   Role: string;
@@ -12,12 +12,7 @@ interface NavbarcontentProps {
 
 const Navbarcontent: React.FC<NavbarcontentProps> = ({ Role }) => {
   const [imdobileMenuOpen, setImdobileMenuOpen] = useState(false);
-  let url;
-  if (Role === "admin") {
-    url = "/admin/";
-  } else {
-    url = "/";
-  }
+  const url = "/";
   return (
     <>
       <div className="flex items-center">
@@ -32,12 +27,12 @@ const Navbarcontent: React.FC<NavbarcontentProps> = ({ Role }) => {
           )}
         </button>
         <div className="hidden md:flex flex-row items-center space-x-1">
-          {/* <LogoChoose />
-          <NavigationComponent url={url} /> */}
+          <LogoButton />
+          {/* <NavigationComponent url={url} /> */}
         </div>
       </div>
       <div
-        className={`absolute top-0 left-0 w-full h-full bg-grayish dark:bg-slate-950 p-8 z-20 md:hidden transition-transform ${
+        className={`absolute top-0 left-0 w-full h-full bg-mediumBeige dark:bg-slate-950 p-8 z-20 md:hidden transition-transform ${
           imdobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -46,7 +41,7 @@ const Navbarcontent: React.FC<NavbarcontentProps> = ({ Role }) => {
             className="mx-auto pb-2"
             onClick={() => setImdobileMenuOpen(false)}
           >
-            {/* <LogoChoose /> */}
+            <LogoButton />
           </div>{" "}
           {/* <NavigationAccordion
             setImdobileMenuOpen={setImdobileMenuOpen}

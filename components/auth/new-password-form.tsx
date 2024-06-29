@@ -49,6 +49,7 @@ const NewPasswordForm = () => {
   return (
     <CardWrapper
       headerLabel="הכנס סיסמא חדשה"
+      headerTitle="איפוס סיסמא"
       backButtonLabel="חזרה להתחברות"
       backButtonHref="/login"
     >

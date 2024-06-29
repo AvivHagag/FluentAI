@@ -52,6 +52,7 @@ const LoginForm = () => {
   return (
     <CardWrapper
       headerLabel="ברוך השב"
+      headerTitle="התחברות"
       backButtonLabel="אין לך משתמש עדין?"
       backButtonHref="/register"
       showSocial

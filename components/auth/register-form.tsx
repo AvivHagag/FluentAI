@@ -87,6 +87,7 @@ const RegisterForm = () => {
   return (
     <CardWrapper
       headerLabel="צור משתמש"
+      headerTitle="הרשמה"
       backButtonLabel="יש לך כבר משתמש?"
       backButtonHref="/login"
       // showSocial

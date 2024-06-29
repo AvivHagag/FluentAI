@@ -45,6 +45,7 @@ const ResetForm = () => {
   return (
     <CardWrapper
       headerLabel="שכחת את הסיסמא"
+      headerTitle="איפוס סיסמא"
       backButtonLabel="חזרה להתחברות"
       backButtonHref="/login"
     >

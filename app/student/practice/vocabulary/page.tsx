@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { generatePrompt } from './openai'
 import {
@@ -50,7 +50,7 @@ export default function VocabularyPage() {
 
       let correctIndex = Math.floor(Math.random() * 4)
       answersArray[correctIndex] = r.answers[index]
-      tempFourAnswersArray[index] = [...answersArray] // Use spread operator to avoid reference issues
+      tempFourAnswersArray[index] = [...answersArray]
     })
 
     setFourAnswersArray(tempFourAnswersArray)
@@ -60,15 +60,10 @@ export default function VocabularyPage() {
     <>
       <header>
         <div className="flex item-center gap-2 mb-4">
-          <h2>Hello, Choose your level please.</h2>
+          <h2>Hello, Choose your level for vocabulary please.</h2>
           <Button onClick={() => handleRequest('Hard')}>Hard</Button>
           <Button onClick={() => handleRequest('Medium')}>Medium</Button>
-          <Button
-            onClick={() => {
-              handleRequest('Easy')
-            }}>
-            Easy
-          </Button>
+          <Button onClick={() => handleRequest('Easy')}>Easy</Button>
         </div>
       </header>
 

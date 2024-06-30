@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { generatePrompt } from './openai'
 import {
-  hardAnswersGrammer,
-  mediumAnswersGrammer,
-  easyAnswersGrammer,
-} from '@/components/grammer-random/grammer'
+  hardAnswersVocabulary,
+  mediumAnswersVocabulary,
+  easyAnswersVocabulary,
+} from '@/components/vocabulary-random/vocabulary'
 
 export default function VocabularyPage() {
   const [fourAnswersArray, setFourAnswersArray] = useState<string[][]>([])
@@ -41,11 +41,11 @@ export default function VocabularyPage() {
 
     r.words.map((word: string, index: number) => {
       if (level === 'Hard') {
-        answersArray = hardAnswersGrammer()
+        answersArray = hardAnswersVocabulary()
       } else if (level === 'Medium') {
-        answersArray = mediumAnswersGrammer()
+        answersArray = mediumAnswersVocabulary()
       } else {
-        answersArray = easyAnswersGrammer()
+        answersArray = easyAnswersVocabulary()
       }
 
       let correctIndex = Math.floor(Math.random() * 4)

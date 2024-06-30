@@ -1,4 +1,4 @@
-export function easyAnswersGrammer() {
+export function easyAnswersVocabulary() {
   const easyWords = [
     'יכול',
     'לשאול',
@@ -111,7 +111,7 @@ export function easyAnswersGrammer() {
   return selectedWords
 }
 
-export function mediumAnswersGrammer() {
+export function mediumAnswersVocabulary() {
   const mediumWords = [
     'יכול',
     'לשאול',
@@ -235,7 +235,7 @@ export function mediumAnswersGrammer() {
   return selectedWords
 }
 
-export function hardAnswersGrammer() {
+export function hardAnswersVocabulary() {
   const hardWords = [
     'הישגי',
     'יכול',

@@ -11,7 +11,9 @@ import {
   adminRoutes,
   studentRoutes,
   teacherRoutes,
+  TeacherNotApprovedRoute,
   DEFAULT_LOGIN_REDIRECT,
+  TEACHERNOTAPPROVED_LOGIN_REDIRECT,
 } from "./routes";
 
 const { auth } = NextAuth(authConfig);
@@ -25,6 +27,9 @@ export default auth((req): any => {
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   const isAdminRoute = nextUrl.pathname.startsWith(adminRoutes);
   const isTeacherRoute = nextUrl.pathname.startsWith(teacherRoutes);
+  const isTeacherNotApprovedRoute = nextUrl.pathname.startsWith(
+    TeacherNotApprovedRoute
+  );
   const isStudentRoute = nextUrl.pathname.startsWith(studentRoutes);
 
   if (isApiAuthRoute) {
@@ -46,6 +51,14 @@ export default auth((req): any => {
     return Response.redirect(new URL(STUDENT_LOGIN_REDIRECT, nextUrl));
   } else if (userRole === "TEACHER" && !isTeacherRoute && !isPublicRoute) {
     return Response.redirect(new URL(TEACHER_LOGIN_REDIRECT, nextUrl));
+  } else if (
+    userRole === "TEACHERNOTAPPROVED" &&
+    !isTeacherNotApprovedRoute &&
+    !isPublicRoute
+  ) {
+    return Response.redirect(
+      new URL(TEACHERNOTAPPROVED_LOGIN_REDIRECT, nextUrl)
+    );
   }
   return;
 });

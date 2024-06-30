@@ -13,7 +13,7 @@ export const register = async (
   teacherSelected: string | null
 ) => {
   const validatedFields = RegisterSchema.safeParse(values);
-
+  let RegisterRole;
   if (!validatedFields.success) {
     return { error: "שדות לא חוקיים!" };
   }
@@ -24,13 +24,18 @@ export const register = async (
   if (existingUser) {
     return { error: "האיימיל הזה כבר בשימוש!" };
   }
+  if (roleSelected === "TEACHER") {
+    RegisterRole = "TEACHERNOTAPPROVED";
+  } else {
+    RegisterRole = "STUDENT";
+  }
   try {
     const newUser = await db.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
-        role: roleSelected as UserRole,
+        role: RegisterRole as UserRole,
       },
     });
 

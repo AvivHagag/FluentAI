@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { generatePrompt } from './openai'
 
 export default function PracticePage() {
@@ -17,6 +16,7 @@ export default function PracticePage() {
     async function onLoad() {
       let r = await generatePrompt()
       setResponse(r)
+      console.log('hello man')
     }
     onLoad()
   }, [])

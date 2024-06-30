@@ -1,37 +1,106 @@
-import Link from 'next/link'
-import { auth } from '@/auth'
+'use client'
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { generatePrompt } from './openai'
+import {
+  hardAnswersGrammer,
+  mediumAnswersGrammer,
+  easyAnswersGrammer,
+} from '@/components/grammer-random/grammer'
 
-export default async function StudentPage() {
-  const session = await auth()
+export default function VocabularyPage() {
+  const [fourAnswersArray, setFourAnswersArray] = useState<string[][]>([])
+  const [rightOrWrong, setRightOrWrong] = useState<string[]>(Array(10).fill(''))
+  const [response, setResponse] = useState({
+    words: [],
+    answers: [],
+  })
+
+  function handleRightOrWrong(
+    answer: string,
+    realAnswer: string,
+    index: number
+  ) {
+    if (answer === realAnswer) {
+      const tempArray = [...rightOrWrong]
+      tempArray[index] = 'Good Job'
+      setRightOrWrong(tempArray)
+    } else {
+      const tempArray = [...rightOrWrong]
+      tempArray[index] = 'Bad choice'
+      setRightOrWrong(tempArray)
+    }
+  }
+
+  async function handleRequest(level: string) {
+    let r = await generatePrompt(level)
+    setResponse(r)
+
+    let answersArray: string[] = []
+    let tempFourAnswersArray: string[][] = []
+
+    r.words.map((word: string, index: number) => {
+      if (level === 'Hard') {
+        answersArray = hardAnswersGrammer()
+      } else if (level === 'Medium') {
+        answersArray = mediumAnswersGrammer()
+      } else {
+        answersArray = easyAnswersGrammer()
+      }
+
+      let correctIndex = Math.floor(Math.random() * 4)
+      answersArray[correctIndex] = r.answers[index]
+      tempFourAnswersArray[index] = [...answersArray] // Use spread operator to avoid reference issues
+    })
+
+    setFourAnswersArray(tempFourAnswersArray)
+  }
 
   return (
     <>
-      <header className="grid place-items-center min-h-screen">
-        <div className="bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-lightBeige to-mediumBeige p-8 rounded shadow-md w-full max-w-md text-center content-center">
-          <h2 className="text-3xl font-bold mb-6">
-            ברוך הבא {session?.user.name}
-          </h2>
-          <div className="space-y-4">
-            <Link
-              href="/student/practice"
-              className="block w-full py-2 bg-mediumBeige text-white rounded-lg hover:bg-amber-800">
-              תרגול עצמי
-            </Link>
-            <Link
-              href="#"
-              className="block w-full py-2 bg-mediumBeige text-white rounded-lg hover:bg-amber-800">
-              משימות
-            </Link>
-            <Link
-              href="#"
-              className="block w-full py-2 bg-mediumBeige text-white rounded-lg hover:bg-amber-800">
-              סטטסטיקה
-            </Link>
-          </div>
-        </div>{' '}
+      <header>
+        <div className="flex item-center gap-2 mb-4">
+          <h2>Hello, Choose your level please.</h2>
+          <Button onClick={() => handleRequest('Hard')}>Hard</Button>
+          <Button onClick={() => handleRequest('Medium')}>Medium</Button>
+          <Button
+            onClick={() => {
+              handleRequest('Easy')
+            }}>
+            Easy
+          </Button>
+        </div>
       </header>
 
-      <main></main>
+      <main>
+        {response.words.length > 0 && (
+          <div>
+            {response.words.map((word, index) => (
+              <div key={index} className="mb-4">
+                <h3>{word}</h3>
+
+                <ul>
+                  {fourAnswersArray[index]?.map((answer, key) => (
+                    <>
+                      <Button
+                        onClick={() =>
+                          handleRightOrWrong(
+                            answer,
+                            response.answers[index],
+                            index
+                          )
+                        }>
+                        {answer}
+                      </Button>
+                    </>
+                  ))}
+                  <p>{rightOrWrong[index]}</p>
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+      </main>
     </>
   )
 }

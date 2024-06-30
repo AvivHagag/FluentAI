@@ -8,7 +8,7 @@ export default async function StudentPage() {
     <>
       <header className="grid place-items-center min-h-screen">
         <div className="bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-lightBeige to-mediumBeige p-8 rounded shadow-md w-full max-w-md text-center content-center">
-          <h2 className="text-3xl font-bold mb-6">מה תרצה לתרגל?</h2>
+          <h2 className="text-3xl font-bold mb-6">?מה תרצה לתרגל</h2>
           <div className="space-y-4">
             <Link
               href="/student/practice/open"

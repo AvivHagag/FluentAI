@@ -5,8 +5,8 @@ const chatModel = new ChatOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
-export async function generatePrompt(prompt: string) {
-  prompt = `Hello, please write for me a paragraph about anything you want and a question about that paragraph with 4 possible answers with only one that is correct, do in in json structure with the paragraph in "paragraph" the question in "question" and the answers in array inside "questions" and the correct answer in "correct".`
+export async function generatePrompt(level: string) {
+  const prompt = `Hello, please write 10 words in english in ${level} level, do it in json format words will be in an array under "words" and the translation of them in Hebrew will be in an array under "answers" corresponding to the words.`
   const response = await chatModel.invoke(prompt)
-  return response.lc_kwargs.content
+  return JSON.parse(response.lc_kwargs.content as string)
 }

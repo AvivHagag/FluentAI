@@ -1,9 +1,6 @@
 import Link from 'next/link'
-import { auth } from '@/auth'
 
 export default async function StudentPage() {
-  const session = await auth()
-
   return (
     <>
       <header className="grid place-items-center min-h-screen">

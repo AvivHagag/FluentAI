@@ -33,7 +33,7 @@ const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
 
   return (
     <DropdownMenu onOpenChange={() => ChevronRotate()}>
-      <DropdownMenuTrigger className="flex items-center space-x-2 bg-transparent border border-grayish rounded-lg px-2">
+      <DropdownMenuTrigger className="flex items-center space-x-2 bg-transparent border border-grayish rounded-lg px-2 py-0.5">
         <p className="text-darkRed" dir="rtl">
           {session.user.name}
         </p>
@@ -51,7 +51,7 @@ const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
           <>
             <Avatar>
               <AvatarImage />
-              <AvatarFallback className="bg-lightRed">
+              <AvatarFallback className="bg-lightRed text-lightBeige">
                 {userInitials}
               </AvatarFallback>
             </Avatar>{" "}

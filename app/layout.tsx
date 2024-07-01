@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/footer/Footer";
 import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +22,8 @@ export default async function RootLayout({
       <body>
         <SessionProvider>
           <Navbar />
-          <main className="h-full flex flex-col w-full text-xl bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-lightBeige to-mediumBeige">
-            <div className="flex-grow">{children}</div>
+          <main className="flex-grow w-full min-h-screen text-xl bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-lightBeige to-mediumBeige">
+            {children}
           </main>
           <Footer />
         </SessionProvider>

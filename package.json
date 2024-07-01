@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.4.1",
+    "@emotion/react": "^11.11.4",
     "@heroicons/react": "^2.1.4",
     "@hookform/resolvers": "^3.6.0",
     "@prisma/client": "^5.15.1",
@@ -31,6 +32,7 @@
     "next": "14.2.4",
     "next-auth": "^5.0.0-beta.19",
     "react": "^18",
+    "react-awesome-reveal": "^4.2.12",
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "react-icons": "^5.2.1",

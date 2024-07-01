@@ -1,7 +1,7 @@
 import { CardWrapper } from "./card-wrapper";
-import GameLogo from "@/public/studentCards/GameLogo (1).png";
-import SelfLearningLogo from "@/public/studentCards/SelfLearningLogo (1).png";
-import TasksLogo from "@/public/studentCards/TasksLogo (1).png";
+import GameLogo from "@/public/studentCards/GameLogo.png";
+import SelfLearningLogo from "@/public/studentCards/SelfLearningLogo.png";
+import TasksLogo from "@/public/studentCards/TasksLogo.png";
 const StudentOptionsCards = () => {
   return (
     <div className="flex flex-wrap items-center justify-center py-16">

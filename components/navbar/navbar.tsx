@@ -5,11 +5,10 @@ import SigninButton from "./signinbutton";
 
 const NavBar = async () => {
   const session = await auth();
-  const Role = session?.user.role;
   return (
     <header className="flex px-2 bg-mediumBeige border-b border-lightBeige">
       <div className="flex justify-between items-center w-full">
-        {Role && <Navbarcontent Role={Role} />}
+        <Navbarcontent />
         <div className="flex flex-row items-center">
           {session && <SigninButton session={session} />}
         </div>

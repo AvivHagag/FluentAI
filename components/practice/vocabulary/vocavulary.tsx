@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { generatePrompt } from '@/components/practice/openai'
+import { generatePrompt } from '@/actions/openai'
 import {
   hardAnswersVocabulary,
   mediumAnswersVocabulary,

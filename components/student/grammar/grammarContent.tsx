@@ -23,15 +23,15 @@ export default function GrammarContent() {
     { name: "Medium", label: "Medium" },
     { name: "Hard", label: "Hard" },
   ];
-  const handleLevelChoosen = (LevelChoosen: string) => {
-    setLevel(LevelChoosen);
-    handleRequest(LevelChoosen);
+  const handleLevelChosen = (LevelChosen: string) => {
+    setLevel(LevelChosen);
+    handleRequest(LevelChosen);
   };
 
-  const handleRequest = async (LevelChoosen: string) => {
+  const handleRequest = async (LevelChosen: string) => {
     setIsLoading(true);
     try {
-      const Result = await GrammarRequest(LevelChoosen);
+      const Result = await GrammarRequest(LevelChosen);
       setResponse(Result);
     } catch (error) {
       console.log(error);
@@ -72,7 +72,7 @@ export default function GrammarContent() {
                   key={level.label}
                   variant="outline"
                   className="m-2 border-mediumBeige hover:bg-grayish text-mediumBeige"
-                  onClick={() => handleLevelChoosen("Hard")}
+                  onClick={() => handleLevelChosen("Hard")}
                 >
                   {level.label}
                 </Button>
@@ -96,7 +96,7 @@ export default function GrammarContent() {
                       {response.mistake}
                     </div>
                     {!answer.hasAnswered ? (
-                      <div className="flex space-x-2">
+                      <div className="flex flex-col xs:flex-row xs:space-y-0 xs:space-x-2 space-y-2 py-1">
                         <Input
                           type="text"
                           className="p-1 sm:-2 border-mediumBeige text-darkRed"

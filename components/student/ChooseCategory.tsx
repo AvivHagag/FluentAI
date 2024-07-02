@@ -1,25 +1,28 @@
 "use client";
 import { useState } from "react";
-import SideBarChoosen from "./side-bar-choosen";
-import GrammerClient from "./grammar/grammarContent";
+import GrammarContent from "./grammar/grammarContent";
+import OpenQuestionsContent from "./open-questions/openQuestionsContent";
+import VocabularyContent from "./vocabulary/vocabularyContent";
+import SideBarChosen from "./side-bar-chosen";
 
 const ChooseCategory = () => {
-  const [categoryChoosen, setCategoryChoosen] = useState<string>("grammar");
+  const [categoryChosen, setCategoryChosen] = useState<string>("");
 
-  const handleChooesn = (ChoosenName: string) => {
-    console.log(ChoosenName);
-    setCategoryChoosen(ChoosenName);
+  const handleChooesn = (ChosenName: string) => {
+    setCategoryChosen(ChosenName);
   };
 
   return (
     <>
       {
-        <div className="flex justify-center min-h-96 mx-2 border border-grayish rounded-lg bg-lightBeige">
-          <div className="flex-grow mx-2 mt-8">
-            {categoryChoosen === "grammar" && <GrammerClient />}
+        <div className="flex justify-center min-h-96 mx-2 border border-mediumBeige shadow-xl rounded-lg bg-lightBeige">
+          <div className="flex-grow mx-2 mt-6">
+            {categoryChosen === "vocabulary" && <VocabularyContent />}
+            {categoryChosen === "grammar" && <GrammarContent />}
+            {categoryChosen === "openQuestions" && <OpenQuestionsContent />}
           </div>
-          <SideBarChoosen
-            categoryChoosen={categoryChoosen}
+          <SideBarChosen
+            categoryChosen={categoryChosen}
             handleChooesn={handleChooesn}
           />
         </div>

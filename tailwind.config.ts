@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        xs: { min: "480px" },
+      },
       colors: {
         lightBeige: "#EAE7DC",
         mediumBeige: "#D8C3A5",

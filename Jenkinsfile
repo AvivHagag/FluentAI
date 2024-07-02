@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/AvivHagag/FluentAI-Test'
+                git branch: 'Student', credentialsId: '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', url: 'https://github.com/AvivHagag/FluentAI-Test.git'
             }
         }
 

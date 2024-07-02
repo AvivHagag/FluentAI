@@ -1,7 +1,8 @@
-# Dockerfile
-
 # Use the official Node.js image
 FROM node:16
+
+# Set the Node environment to development
+ENV NODE_ENV=development
 
 # Create and change to the app directory
 WORKDIR /app
@@ -16,7 +17,7 @@ RUN npm install
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 8090
 
 # Run the application
 CMD ["npm", "run", "dev"]

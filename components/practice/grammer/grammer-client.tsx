@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '../../ui/button'
-//import { Button } fro'@/coponents/ui/button'
+//import { Button } fro'@/coponents/ui/bun'
 //import { generatePrompt } from '@/actions/openai'
 import { generatePrompt } from '../../../actions/openai'
 import { useState } from 'react'

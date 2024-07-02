@@ -2,13 +2,17 @@
 import React, { useState } from "react";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import Squares2X2Icon from "@heroicons/react/24/outline/Squares2X2Icon";
-import Image from "next/image";
+import CategoriesLinks from "./CategoriesLinks";
 
 interface SideBarChooseProps {
+  categoryChoosen: string;
   handleChooesn: (chosenName: string) => void;
 }
 
-const SideBarChoose: React.FC<SideBarChooseProps> = ({ handleChooesn }) => {
+const SideBarChoose: React.FC<SideBarChooseProps> = ({
+  categoryChoosen,
+  handleChooesn,
+}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -16,7 +20,7 @@ const SideBarChoose: React.FC<SideBarChooseProps> = ({ handleChooesn }) => {
   };
 
   return (
-    <div className="flex " dir="rtl">
+    <div className="flex" dir="rtl">
       {!isSidebarOpen ? (
         <button
           className="fixed mr-1 text-darkRed w-10 h-10 sm:hidden z-[600]"
@@ -35,35 +39,24 @@ const SideBarChoose: React.FC<SideBarChooseProps> = ({ handleChooesn }) => {
         </button>
       )}
       <div
-        className={`flex flex-col rounded-r-lg w-32 md:w-40 transform transition-transform ease-in-out duration-300 inset-y-0 right-0 ${
-          isSidebarOpen ? "translate-x-0 z-[500]" : "translate-x-full z-[500]"
+        className={`flex flex-col rounded-r-lg w-36 sm:w-48 transform transition-transform ease-in-out duration-300 inset-y-0 right-0 ${
+          isSidebarOpen
+            ? "translate-x-0 z-[500]"
+            : "translate-x-full z-[500] hidden sm:block"
         } sm:translate-x-0 sm:static sm:z-0`}
       >
         <div
-          className={`flex flex-col min-h-96 h-full py-12 px-3 sm:py-3 sm:space-y-3 text-lightRed text-sm md:text-xl whitespace-nowrap space-y-4 rounded-r-lg border-l border-grayish bg-mediumBeige ${
+          className={`flex flex-col min-h-96 h-full py-12 px-1 sm:px-2 sm:py-3 text-lightRed text-sm md:text-xl whitespace-nowrap rounded-r-lg border-l border-grayish ${
             isSidebarOpen
               ? "z-[500]"
-              : "border-transparent bg-transparent sm:border-l sm:border-grayish sm:bg-mediumBeige"
+              : "border-transparent bg-transparent sm:border-l sm:border-grayish hidden sm:block"
           }`}
         >
-          <div
-            className="cursor-pointer"
-            onClick={() => handleChooesn("vocabulary")}
-          >
-            אוצר מילים
-          </div>
-          <div
-            className="cursor-pointer"
-            onClick={() => handleChooesn("grammar")}
-          >
-            דקדוק
-          </div>
-          <div
-            className="cursor-pointer"
-            onClick={() => handleChooesn("openQuestions")}
-          >
-            שאלות פתוחות
-          </div>
+          <CategoriesLinks
+            isSidebarOpen={isSidebarOpen}
+            categoryChoosen={categoryChoosen}
+            handleChooesn={handleChooesn}
+          />
         </div>
       </div>
     </div>

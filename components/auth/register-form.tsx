@@ -21,7 +21,7 @@ import { RadioGroup } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { getAllTeachersNameAndID } from "@/lib/ServerActions/ServerActions";
 import { Teacher } from "@prisma/client";
-import SyncLoader from "react-spinners/SyncLoader";
+import HashLoader from "react-spinners/HashLoader";
 import { register } from "@/actions/register";
 import { ComboboxDemo } from "./register-combobox";
 import { useRouter } from "next/navigation";
@@ -188,15 +188,11 @@ const RegisterForm = () => {
             {roleSelected === "STUDENT" && (
               <>
                 {isLoading && !teachers ? (
-                  <div className="flex items-center justify-center pb-2 space-x-2">
-                    <p className="text-naivyBlue dark:text-glowGreen text-xxs">
+                  <div className="flex flex-col items-center justify-center pb-2 space-x-2">
+                    <p className="text-darkRed text-xxs py-2" dir="rtl">
                       טוען ..
                     </p>
-                    <SyncLoader
-                      color="#FFFFFF dark:#9ffd32"
-                      className="text-naivyBlue dark:text-glowGreen"
-                      size={20}
-                    />
+                    <HashLoader color="#E85A4F" size={25} />
                   </div>
                 ) : (
                   <div>

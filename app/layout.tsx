@@ -6,6 +6,13 @@ import Footer from "@/components/footer/Footer";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 const inter = Inter({ subsets: ["latin"] });
+import { Alef } from "next/font/google";
+
+// Configure the Alef font
+const alef = Alef({
+  weight: "400",
+  subsets: ["hebrew"],
+});
 
 export const metadata: Metadata = {
   title: "FluentAI",
@@ -20,7 +27,7 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   return (
-    <html lang="en">
+    <html lang="en" className={alef.className}>
       <body>
         <SessionProvider>
           {session && <Navbar />}

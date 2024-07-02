@@ -79,3 +79,10 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .icon-color {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(35%) saturate(7492%)
+      hue-rotate(331deg) brightness(97%) contrast(100%);
+  }
+}

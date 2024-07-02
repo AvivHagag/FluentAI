@@ -22,7 +22,7 @@ describe('GrammerClient', () => {
 
     // Check if level buttons are rendered
     expect(
-      screen.queryByText('Hello, Choose your level for grammar please.')
+      screen.queryByText('Hello!, Choose your level for grammar please.')
     ).not.toBeNull()
     expect(screen.queryByText('Hard')).not.toBeNull()
     expect(screen.queryByText('Medium')).not.toBeNull()

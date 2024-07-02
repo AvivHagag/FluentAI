@@ -1,7 +1,8 @@
 'use client'
-
-import { Button } from '@/components/ui/button'
-import { generatePrompt } from '@/actions/openai'
+import { Button } from '../../ui/button'
+//import { Button } from '@/components/ui/button'
+//import { generatePrompt } from '@/actions/openai'
+import { generatePrompt } from '../../../actions/openai'
 import { useState } from 'react'
 
 export default function GrammerClient() {

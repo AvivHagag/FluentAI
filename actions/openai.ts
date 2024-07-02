@@ -1,6 +1,5 @@
 'use server'
-import { ChatOpenAI } from '@langchain/openai'
-
+import { ChatOpenAI } from '../node_modules/@langchain/openai'
 const chatModel = new ChatOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })

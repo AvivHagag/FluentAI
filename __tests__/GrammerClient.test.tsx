@@ -1,10 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
-import GrammerClient from '@/components/practice/grammer/grammer'
-import * as openai from '@/actions/openai'
+import '@testing-library/jest-dom'
+import GrammerClient from '../components/practice/grammer/grammer-client'
+import * as openai from '../actions/openai'
+import React from 'react'
 
 // Mock the generatePrompt function
-jest.mock('@/actions/openai', () => ({
+jest.mock('../actions/openai', () => ({
   generatePrompt: jest.fn(),
 }))
 

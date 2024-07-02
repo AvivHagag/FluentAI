@@ -1,11 +1,8 @@
-// Jenkinsfile
-
 pipeline {
-    agent {
-        docker {
-            image 'node:16'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
+    agent any
+
+    tools {
+        nodejs "NodeJS" // Name of the NodeJS installation configured in Jenkins
     }
 
     environment {
@@ -15,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git 'https://github.com/AvivHagag/FluentAI-Test'
             }
         }
 
@@ -25,23 +22,29 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Test') {
             steps {
                 sh 'npm test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Add your deployment steps here
             }
         }
     }
 
     post {
         always {
-            junit 'test-results.xml'
-        }
-        success {
-            echo 'Tests passed!'
-        }
-        failure {
-            echo 'Tests failed!'
-            currentBuild.result = 'FAILURE'
+            junit 'reports/**/*.xml'
+            archiveArtifacts 'build/**/*'
         }
     }
 }

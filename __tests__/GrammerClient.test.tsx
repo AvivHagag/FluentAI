@@ -4,7 +4,7 @@ import GrammerClient from '../components/practice/grammer/grammer-client'
 import * as openai from '../actions/openai'
 import React from 'react'
 
-// Mock the generatePrompt unction
+// Mock the generatePrompt uncton
 jest.mock('../actions/openai', () => ({
   generatePrompt: jest.fn(),
 }))

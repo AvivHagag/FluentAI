@@ -31,7 +31,7 @@ export default async function RootLayout({
       <body>
         <SessionProvider>
           {session && <Navbar />}
-          <main className="flex-grow w-full min-h-screen text-xl bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-lightBeige to-mediumBeige">
+          <main className="flex-grow w-full min-h-screen text-xl bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-lightBeige to-mediumBeige pb-4">
             {children}
           </main>
           {session && <Footer />}

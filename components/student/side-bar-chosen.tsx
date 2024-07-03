@@ -13,7 +13,7 @@ const SideBarChoose: React.FC<SideBarChooseProps> = ({
   categoryChosen,
   handleChooesn,
 }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prevState) => !prevState);

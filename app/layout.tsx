@@ -8,7 +8,6 @@ import { auth } from "@/auth";
 const inter = Inter({ subsets: ["latin"] });
 import { Alef } from "next/font/google";
 
-// Configure the Alef font
 const alef = Alef({
   weight: "400",
   subsets: ["hebrew"],

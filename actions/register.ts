@@ -1,28 +1,28 @@
-"use server";
-import * as z from "zod";
-import bcrypt from "bcryptjs";
-import { db } from "@/lib/db";
-import { getUserByEmail } from "@/data/user";
-import { RegisterSchema } from "@/schemas";
-import { generateVerficiationToken } from "@/lib/tokens";
-import { UserRole } from "@prisma/client";
+'use server'
+import * as z from 'zod'
+import bcrypt from 'bcryptjs'
+import { db } from '../lib/db'
+import { getUserByEmail } from '../data/user'
+import { RegisterSchema } from '../schemas'
+import { generateVerficiationToken } from '../lib/tokens'
+import { UserRole } from '@prisma/client'
 
 export const register = async (
   values: z.infer<typeof RegisterSchema>,
   roleSelected: string,
   teacherSelected: string | null
 ) => {
-  const validatedFields = RegisterSchema.safeParse(values);
+  const validatedFields = RegisterSchema.safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "שדות לא חוקיים!" };
+    return { error: 'שדות לא חוקיים!' }
   }
 
-  const { email, password, name } = validatedFields.data;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const existingUser = await getUserByEmail(email);
+  const { email, password, name } = validatedFields.data
+  const hashedPassword = await bcrypt.hash(password, 10)
+  const existingUser = await getUserByEmail(email)
   if (existingUser) {
-    return { error: "האיימיל הזה כבר בשימוש!" };
+    return { error: 'האיימיל הזה כבר בשימוש!' }
   }
   try {
     const newUser = await db.user.create({
@@ -32,9 +32,9 @@ export const register = async (
         password: hashedPassword,
         role: roleSelected as UserRole,
       },
-    });
+    })
 
-    if (roleSelected === "STUDENT" && teacherSelected) {
+    if (roleSelected === 'STUDENT' && teacherSelected) {
       await db.student.create({
         data: {
           userId: newUser.id,
@@ -42,20 +42,20 @@ export const register = async (
           name: newUser.name,
           image: newUser.image ? newUser.image : null,
         },
-      });
-    } else if (roleSelected === "TEACHER") {
+      })
+    } else if (roleSelected === 'TEACHER') {
       await db.teacher.create({
         data: {
           userId: newUser.id,
           name: newUser.name,
           image: newUser.image ? newUser.image : null,
         },
-      });
+      })
     }
   } catch (error) {
-    console.error("Failed to create user and profile:", error);
-    throw error;
+    console.error('Failed to create user and profile:', error)
+    throw error
   }
 
-  return { success: "המשתמש נוצר בהצלחה!" };
-};
+  return { success: 'המשתמש נוצר בהצלחה!' }
+}

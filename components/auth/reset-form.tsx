@@ -1,10 +1,10 @@
-"use client";
-import { CardWrapper } from "./card-wrapper";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useState, useTransition } from "react";
-import { ResetSchema } from "@/schemas";
+'use client'
+import { CardWrapper } from './card-wrapper'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+import { useState, useTransition } from 'react'
+import { ResetSchema } from '../../schemas'
 import {
   Form,
   FormControl,
@@ -12,42 +12,42 @@ import {
   FormField,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
-import { reset } from "@/actions/reset";
+} from '../ui/form'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
+import { FormError } from '../form-error'
+import { FormSuccess } from '../form-success'
+import { reset } from '../../actions/reset'
+import React from 'react'
 
 const ResetForm = () => {
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>('')
+  const [success, setSuccess] = useState<string | undefined>('')
+  const [isPending, startTransition] = useTransition()
   const form = useForm<z.infer<typeof ResetSchema>>({
     resolver: zodResolver(ResetSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
-  });
+  })
 
   const onSubmit = (values: z.infer<typeof ResetSchema>) => {
-    setError("");
-    setSuccess("");
+    setError('')
+    setSuccess('')
 
     startTransition(() => {
       reset(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
-      });
-    });
-  };
+        setError(data?.error)
+        setSuccess(data?.success)
+      })
+    })
+  }
 
   return (
     <CardWrapper
       headerLabel="שכחת את הסיסמא"
       backButtonLabel="חזרה להתחברות"
-      backButtonHref="/login"
-    >
+      backButtonHref="/login">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4" dir="rtl">
@@ -78,7 +78,7 @@ const ResetForm = () => {
         </form>
       </Form>
     </CardWrapper>
-  );
-};
+  )
+}
 
-export default ResetForm;
+export default ResetForm

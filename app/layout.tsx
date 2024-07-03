@@ -1,20 +1,21 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/navbar/navbar";
-import { SessionProvider } from "next-auth/react";
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import Navbar from '../components/navbar/navbar'
+import { SessionProvider } from 'next-auth/react'
+import React from 'react'
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "FluentAI",
+  title: 'FluentAI',
   description:
-    "FluentAI offers a personalized and interactive learning experience for English language learners of all levels.",
-};
+    'FluentAI offers a personalized and interactive learning experience for English language learners of all levels.',
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -27,5 +28,5 @@ export default async function RootLayout({
         </SessionProvider>
       </body>
     </html>
-  );
+  )
 }

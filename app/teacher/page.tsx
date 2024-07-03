@@ -1,5 +1,7 @@
-const TeacherPage = () => {
-  return <div>Teacher Page</div>;
-};
+import React from 'react'
 
-export default TeacherPage;
+const TeacherPage = () => {
+  return <div>Teacher Page</div>
+}
+
+export default TeacherPage

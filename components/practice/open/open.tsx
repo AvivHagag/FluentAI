@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { generatePrompt } from '@/actions/openai'
+import { Button } from '../../ui/button'
+import { generatePrompt } from '../../../actions/openai'
 
 export default function OpenClient() {
   const [response, setResponse] = useState({

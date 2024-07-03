@@ -1,10 +1,10 @@
-"use client";
-import { CardWrapper } from "./card-wrapper";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useEffect, useState, useTransition } from "react";
-import { RegisterSchema } from "@/schemas";
+'use client'
+import { CardWrapper } from './card-wrapper'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+import { useEffect, useState, useTransition } from 'react'
+import { RegisterSchema } from '../../schemas'
 import {
   Form,
   FormControl,
@@ -12,77 +12,78 @@ import {
   FormField,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
-import { RadioGroup } from "../ui/radio-group";
-import { Label } from "../ui/label";
-import { getAllTeachersNameAndID } from "@/lib/ServerActions/ServerActions";
-import { Teacher } from "@prisma/client";
-import SyncLoader from "react-spinners/SyncLoader";
-import { register } from "@/actions/register";
-import { ComboboxDemo } from "./register-combobox";
-import { useRouter } from "next/navigation";
-import { LOGIN_REDIRECT } from "@/routes";
+} from '../ui/form'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
+import { FormError } from '../form-error'
+import { FormSuccess } from '../form-success'
+import { RadioGroup } from '../ui/radio-group'
+import { Label } from '../ui/label'
+import { getAllTeachersNameAndID } from '../../lib/ServerActions/ServerActions'
+import { Teacher } from '@prisma/client'
+import SyncLoader from 'react-spinners/SyncLoader'
+import { register } from '../../actions/register'
+import { ComboboxDemo } from './register-combobox'
+import { useRouter } from 'next/navigation'
+import { LOGIN_REDIRECT } from '../../routes'
+import React from 'react'
 
 const RegisterForm = () => {
-  const [error, setError] = useState<string | undefined>("");
-  const [errorTeacher, setErrorTeacher] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [teachers, setTeachers] = useState<Teacher[] | undefined>([]);
-  const [teacherSelected, setTeacherSelected] = useState<string | null>(null);
-  const [roleSelected, setRoleSelected] = useState<string>("TEACHER");
-  const router = useRouter();
+  const [error, setError] = useState<string | undefined>('')
+  const [errorTeacher, setErrorTeacher] = useState<boolean>(false)
+  const [success, setSuccess] = useState<string | undefined>('')
+  const [isPending, startTransition] = useTransition()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [teachers, setTeachers] = useState<Teacher[] | undefined>([])
+  const [teacherSelected, setTeacherSelected] = useState<string | null>(null)
+  const [roleSelected, setRoleSelected] = useState<string>('TEACHER')
+  const router = useRouter()
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      email: "",
-      password: "",
-      name: "",
+      email: '',
+      password: '',
+      name: '',
     },
-  });
+  })
 
   useEffect(() => {
-    if (roleSelected === "STUDENT") {
-      setIsLoading(true);
+    if (roleSelected === 'STUDENT') {
+      setIsLoading(true)
       getAllTeachersNameAndID()
         .then((teachersData) => {
-          setTeachers(teachersData);
-          setIsLoading(false);
+          setTeachers(teachersData)
+          setIsLoading(false)
         })
         .catch(() => {
-          setIsLoading(false);
-        });
+          setIsLoading(false)
+        })
     } else {
-      setTeachers([]);
+      setTeachers([])
     }
-  }, [roleSelected]);
+  }, [roleSelected])
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    setError("");
-    setSuccess("");
-    if (roleSelected === "STUDENT") {
+    setError('')
+    setSuccess('')
+    if (roleSelected === 'STUDENT') {
       if (!teacherSelected) {
-        setErrorTeacher(true);
-        return;
+        setErrorTeacher(true)
+        return
       }
     }
     startTransition(() => {
       register(values, roleSelected, teacherSelected).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data.error)
+        setSuccess(data.success)
         if (data.success) {
           setTimeout(() => {
-            router.push(LOGIN_REDIRECT);
-          }, 1000);
+            router.push(LOGIN_REDIRECT)
+          }, 1000)
         }
-      });
-    });
-  };
+      })
+    })
+  }
 
   return (
     <CardWrapper
@@ -159,8 +160,8 @@ const RegisterForm = () => {
                           type="radio"
                           id="TEACHER"
                           value="TEACHER"
-                          onChange={() => setRoleSelected("TEACHER")}
-                          checked={roleSelected === "TEACHER"}
+                          onChange={() => setRoleSelected('TEACHER')}
+                          checked={roleSelected === 'TEACHER'}
                         />
                         <Label htmlFor="TEACHER" className="mx-1">
                           מורה
@@ -171,8 +172,8 @@ const RegisterForm = () => {
                           type="radio"
                           id="STUDENT"
                           value="STUDENT"
-                          onChange={() => setRoleSelected("STUDENT")}
-                          checked={roleSelected === "STUDENT"}
+                          onChange={() => setRoleSelected('STUDENT')}
+                          checked={roleSelected === 'STUDENT'}
                         />
                         <Label htmlFor="STUDENT" className="mx-1">
                           תלמיד
@@ -184,7 +185,7 @@ const RegisterForm = () => {
                 </FormItem>
               )}
             />
-            {roleSelected === "STUDENT" && (
+            {roleSelected === 'STUDENT' && (
               <>
                 {isLoading && !teachers ? (
                   <div className="flex items-center justify-center pb-2 space-x-2">
@@ -225,7 +226,7 @@ const RegisterForm = () => {
         </form>
       </Form>
     </CardWrapper>
-  );
-};
+  )
+}
 
-export default RegisterForm;
+export default RegisterForm

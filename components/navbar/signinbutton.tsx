@@ -2,16 +2,17 @@
 import React, { useState } from "react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+} from "../ui/navigation-menu";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Session } from "next-auth";
 
 interface SigninButtonProps {
@@ -20,7 +21,7 @@ interface SigninButtonProps {
 
 const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
   const [open, setOpen] = useState(false);
-  const nameParts = session.user.name?.split(" ");
+  const nameParts = session?.user.name?.split(" ");
   const userInitials =
     nameParts && nameParts.length >= 2
       ? nameParts[0][0] + nameParts[1][0]
@@ -34,13 +35,13 @@ const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
             onClick={() => setOpen(!open)}
           >
             <p className="text-darkRed" dir="rtl">
-              {session.user.name}
+              {session?.user.name}
             </p>
-            {session.user.image ? (
+            {session?.user.image ? (
               <>
                 <Image
-                  src={session.user.image ?? ""}
-                  alt={session.user.name ?? ""}
+                  src={session?.user.image ?? ""}
+                  alt={session?.user.name ?? ""}
                   className="rounded-full"
                   width={32}
                   height={32}
@@ -63,7 +64,7 @@ const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
           >
             <div className="w-32">
               <ul className="flex flex-col items-center space-y-2 text-sm sm:text-base">
-                {session.user.role === "ADMIN" && (
+                {session?.user.role === "ADMIN" && (
                   <li className="hover:text-naivyBlue hover:scale-105 dark:hover:text-glowGreen">
                     <Link href="/admin">Admin Panel</Link>
                   </li>

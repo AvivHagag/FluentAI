@@ -1,10 +1,10 @@
-"use client";
-import { CardWrapper } from "./card-wrapper";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useState, useTransition } from "react";
-import { NewPasswordSchema } from "@/schemas";
+'use client'
+import { CardWrapper } from './card-wrapper'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+import { useState, useTransition } from 'react'
+import { NewPasswordSchema } from '../../schemas'
 import {
   Form,
   FormControl,
@@ -12,46 +12,46 @@ import {
   FormField,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { FormError } from "../form-error";
-import { FormSuccess } from "../form-success";
-import { newPassword } from "@/actions/newPassword";
-import { useSearchParams } from "next/navigation";
+} from '../ui/form'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
+import { FormError } from '../form-error'
+import { FormSuccess } from '../form-success'
+import { newPassword } from '../../actions/newPassword'
+import { useSearchParams } from 'next/navigation'
+import React from 'react'
 
 const NewPasswordForm = () => {
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
+  const [error, setError] = useState<string | undefined>('')
+  const [success, setSuccess] = useState<string | undefined>('')
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      password: "",
+      password: '',
     },
-  });
+  })
 
   const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-    setError("");
-    setSuccess("");
+    setError('')
+    setSuccess('')
 
     startTransition(() => {
       newPassword(values, token).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
-      });
-    });
-  };
+        setError(data?.error)
+        setSuccess(data?.success)
+      })
+    })
+  }
 
   return (
     <CardWrapper
       headerLabel="הכנס סיסמא חדשה"
       backButtonLabel="חזרה להתחברות"
-      backButtonHref="/login"
-    >
+      backButtonHref="/login">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4" dir="rtl">
@@ -82,7 +82,7 @@ const NewPasswordForm = () => {
         </form>
       </Form>
     </CardWrapper>
-  );
-};
+  )
+}
 
-export default NewPasswordForm;
+export default NewPasswordForm

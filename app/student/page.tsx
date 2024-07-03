@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { auth } from '@/auth'
+import { auth } from '../../auth'
+import React from 'react'
 
 export default async function StudentPage() {
   const session = await auth()

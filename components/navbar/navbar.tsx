@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbarcontent from './navbarcontent'
-import { auth } from '@/auth'
+import { auth } from '../../auth'
 import SigninButton from './signinbutton'
 // import SigninButton from "./SignInButton";
 // import SearchButton from "./SearchButton";

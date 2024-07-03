@@ -1,12 +1,12 @@
 'use client'
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { generatePrompt } from '@/actions/openai'
+import { Button } from '../../ui/button'
+import { generatePrompt } from '../../../actions/openai'
 import {
   hardAnswersVocabulary,
   mediumAnswersVocabulary,
   easyAnswersVocabulary,
-} from '@/components/vocabulary-random/vocabulary'
+} from '../../vocabulary-random/vocabulary'
 
 export default function VocabularyClient() {
   const [fourAnswersArray, setFourAnswersArray] = useState<string[][]>([])

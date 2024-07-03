@@ -1,30 +1,30 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/navbar/navbar";
-import Footer from "@/components/footer/Footer";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
-const inter = Inter({ subsets: ["latin"] });
-import { Alef } from "next/font/google";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import Navbar from '@/components/navbar/navbar'
+import Footer from '@/components/Footer/Footer'
+import { SessionProvider } from 'next-auth/react'
+import { auth } from '@/auth'
+const inter = Inter({ subsets: ['latin'] })
+import { Alef } from 'next/font/google'
 
 const alef = Alef({
-  weight: "400",
-  subsets: ["hebrew"],
-});
+  weight: '400',
+  subsets: ['hebrew'],
+})
 
 export const metadata: Metadata = {
-  title: "FluentAI",
+  title: 'FluentAI',
   description:
-    "FluentAI offers a personalized and interactive learning experience for English language learners of all levels.",
-};
+    'FluentAI offers a personalized and interactive learning experience for English language learners of all levels.',
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const session = await auth();
+  const session = await auth()
   return (
     <html lang="en" className={alef.className}>
       <body>
@@ -37,5 +37,5 @@ export default async function RootLayout({
         </SessionProvider>
       </body>
     </html>
-  );
+  )
 }

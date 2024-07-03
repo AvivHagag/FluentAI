@@ -61,10 +61,22 @@
     "prisma": "^5.15.1",
     "tailwindcss": "^3.4.1",
     "ts-jest": "^29.1.5",
-    "typescript": "^5"
+    "typescript": "^5.5.3"
   },
   "jest": {
-    "testResultsProcessor": "jest-junit",
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/$1"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "tsconfig.json"
+      }
+    },
     "reporters": [
       "default",
       [

@@ -15,7 +15,7 @@ const ChooseCategory = () => {
   return (
     <>
       {
-        <div className="flex justify-center min-h-96 mx-2 border border-mediumBeige shadow-xl rounded-lg bg-lightBeige">
+        <div className="flex justify-center min-h-96 mx-2 lg:mx-8 2xl:mx-16 border border-mediumBeige shadow-xl rounded-lg bg-lightBeige">
           <div className="flex-grow mx-2 mt-6">
             {categoryChosen === "vocabulary" && <VocabularyContent />}
             {categoryChosen === "grammar" && <GrammarContent />}

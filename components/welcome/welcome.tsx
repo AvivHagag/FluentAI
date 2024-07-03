@@ -27,7 +27,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ name }) => {
 
   return (
     <div className="flex flex-col sm:flex-row justify-center items-center px-2 w-full">
-      <div className="relative w-1/2 lg:w-2/5 animate-pingSmall">
+      <div className="relative w-1/2 lg:w-2/5 2xl:w-1/4 animate-pingSmall">
         <Zoom>
           <Image
             src={brain}
@@ -40,14 +40,14 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ name }) => {
         </Zoom>
       </div>
       <div
-        className="flex flex-col justify-center w-full lg:w-3/5 mx-2"
+        className="flex flex-col justify-center w-full lg:w-3/5 2xl:w-3/4 mx-2"
         dir="rtl"
       >
-        <h1 className="text-2xl md:text-4xl lg:text-5xl text-darkRed mb-4 sm:mb-8">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl 2xl:text-7xl text-darkRed mb-4 sm:mb-8">
           ברוך השב, {name}
         </h1>
         <div
-          className="text-xs md:text-md lg:text-md font-medium text-grayish min-h-52"
+          className="text-xs md:text-md lg:text-md 2xl:text-lg font-medium text-grayish min-h-52"
           dir="rtl"
           dangerouslySetInnerHTML={{ __html: displayedText }}
         ></div>

@@ -17,7 +17,7 @@ export const CardWrapper = ({
   return (
     <Link href={urlPath} passHref>
       <div className="transform transition-transform duration-300 hover:scale-105">
-        <Card className="w-64 h-32 bg-mediumBeige my-4 mx-12 text-grayish shadow-md border-grayish hover:border-lightRed hover:text-lightRed hover:shadow-2xl hover:brightness-110">
+        <Card className="w-64 h-32 lg:w-72 lg:h-40 bg-mediumBeige my-4 mx-12 text-grayish shadow-md border-grayish hover:border-lightRed hover:text-lightRed hover:shadow-2xl hover:brightness-110">
           <CardContent
             dir="rtl"
             className="flex justify-between items-center h-full p-2"

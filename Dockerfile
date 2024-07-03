@@ -4,7 +4,7 @@ FROM node:16
 # Set the Node environment to development
 ENV NODE_ENV=development
 
-# Create and change to the app directory
+# Create and changeto the app directory
 WORKDIR /app
 
 # Copy application dependency manifests to the container image.

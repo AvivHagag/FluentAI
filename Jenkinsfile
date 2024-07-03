@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "NodeJS" // Name of the NodeJS installation configured in Jenkins
+        nodejs "nodejs" // Make sure this matches the name of the NodeJS installation configured in Jenkins
     }
 
     stages {
@@ -30,11 +30,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                // Add your deployment steps here
-            }
-        }
+       
     }
 
     post {

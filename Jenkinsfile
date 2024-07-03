@@ -33,11 +33,11 @@ pipeline {
        
     }
 
-    post {
-        always {
-        junit 'reports/**/*.xml'
-        archiveArtifacts 'build/**/*'
+    post{
+            always {
+                junit 'reports/junit/**/*.xml'
+                 archiveArtifacts '**/*', 'reports/junit/**/*'
+            }
         }
-    }
 
 }

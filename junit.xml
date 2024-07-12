@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="4" failures="0" errors="0" time="6.394">
+  <testsuite name="API functions" errors="0" failures="0" skipped="0" timestamp="2024-07-12T11:54:25" time="5.534" tests="3">
+    <testcase classname="API functions GrammarRequest should return a mistake and correct question" name="API functions GrammarRequest should return a mistake and correct question" time="0.025">
+    </testcase>
+    <testcase classname="API functions OpenQuestionsRequest should return a paragraph, question, answers, and correctAnswer" name="API functions OpenQuestionsRequest should return a paragraph, question, answers, and correctAnswer" time="0.002">
+    </testcase>
+    <testcase classname="API functions vocabularyRequest should return words and their translations" name="API functions vocabularyRequest should return words and their translations" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2024-07-12T11:54:25" time="5.537" tests="1">
+    <testcase classname=" adds 1 + 2 to equal 3" name=" adds 1 + 2 to equal 3" time="0.023">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,6 +1,8 @@
+import React from 'react'
+
 interface HeaderProps {
-  Title: string;
-  label: string;
+  Title: string
+  label: string
 }
 
 export const Header = ({ label, Title }: HeaderProps) => {
@@ -9,5 +11,5 @@ export const Header = ({ label, Title }: HeaderProps) => {
       <h1 className="text-3xl font-semibold">🔐 {Title}</h1>
       <p className="text-muted-foreground text-sm">{label}</p>
     </div>
-  );
-};
+  )
+}

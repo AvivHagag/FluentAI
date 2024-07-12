@@ -7,6 +7,7 @@ pipeline {
 
     stages {
         stage('Checkout') {
+            
             steps {
                 git branch: 'Jenkins', credentialsId: '1', url: 'https://github.com/AvivHagag/FluentAI-Test.git'
             }

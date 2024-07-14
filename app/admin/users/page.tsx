@@ -11,17 +11,18 @@ const Users = async () => {
         <Link href={"/admin"}>
           <Button
             variant={"outline"}
-            className="bg-transparent border-lightRed hover:bg-mediumBeige text-lightRed hover:text-black"
+            className="bg-transparent border-grayish hover:bg-mediumBeige text-grayish hover:text-lightRed hover:border-lightRed hover:brightness-110"
           >
             <ArrowUturnLeftIcon width={22} height={22} className="mr-1" />
-            חזרה לתפריט אדמין{" "}
+            <div className="hidden md:block">חזרה לתפריט אדמין </div>
+            <div className="block md:hidden">חזרה </div>
           </Button>
         </Link>
         <div>
           <h2 className="text-lg sm:text-3xl font-bold " dir="rtl">
             כל המשתמשים
           </h2>
-          <div className="text-md sm:text-xl" dir="rtl">
+          <div className="text-base sm:text-xl" dir="rtl">
             {Users?.length} - משתמשים רשומים
           </div>
         </div>

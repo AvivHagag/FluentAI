@@ -2,37 +2,23 @@
 import HashLoader from "react-spinners/HashLoader";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { ApproveTeacher, DeleteUser } from "@/lib/ServerActions/ServerActions";
+import { DeleteUser } from "@/lib/ServerActions/ServerActions";
 import { useRouter } from "next/navigation";
+import { User } from "@prisma/client";
 
-interface TeachersToApproveProps {
-  Teachers: {
-    id: string;
-    name: string | null;
-  }[];
+interface AllUsersComponent {
+  Users: User[];
 }
 
-const TeachersToApprove: React.FC<TeachersToApproveProps> = ({ Teachers }) => {
+const allUsersComponent: React.FC<AllUsersComponent> = ({ Users }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [teachers, setTeachers] = useState(Teachers);
+  const [allUsers, setAllUsers] = useState(Users);
   const router = useRouter();
-
-  const handleApprove = async (ID: string) => {
-    setIsLoading(true);
-    await ApproveTeacher(ID);
-    setTeachers((prevTeachers) =>
-      prevTeachers.filter((teacher) => teacher.id !== ID)
-    );
-    setIsLoading(false);
-    router.refresh();
-  };
 
   const handleDelete = async (ID: string) => {
     setIsLoading(true);
     await DeleteUser(ID);
-    setTeachers((prevTeachers) =>
-      prevTeachers.filter((teacher) => teacher.id !== ID)
-    );
+    setAllUsers((prevUsers) => prevUsers.filter((user) => user.id !== ID));
     setIsLoading(false);
     router.refresh();
   };
@@ -49,29 +35,22 @@ const TeachersToApprove: React.FC<TeachersToApproveProps> = ({ Teachers }) => {
       ) : (
         <>
           <div className="flex flex-col space-y-4">
-            {teachers.map((teacher) => (
+            {allUsers.map((user) => (
               <div
-                key={teacher.id}
+                key={user.id}
                 className="flex justify-between items-center p-2 lg:p-3 rounded-lg border border-mediumBeige bg-lightBeige shadow-lg"
               >
                 <div className="flex space-x-1 sm:space-x-2 lg:space-x-3">
                   <Button
                     variant={"destructive"}
                     className="text-xs md:text-base"
-                    onClick={() => handleDelete(teacher.id)}
+                    onClick={() => handleDelete(user.id)}
                   >
                     מחק
                   </Button>
-                  <Button
-                    variant={"outline"}
-                    className="border-white text-white bg-green-500 hover:bg-green-700 text-xs md:text-base"
-                    onClick={() => handleApprove(teacher.id)}
-                  >
-                    אישור
-                  </Button>
                 </div>
                 <h3 className="text-base md:text-lg text-black">
-                  {teacher.name || "Unnamed Teacher"}
+                  {user.name || "Unnamed Teacher"}
                 </h3>
               </div>
             ))}
@@ -82,4 +61,4 @@ const TeachersToApprove: React.FC<TeachersToApproveProps> = ({ Teachers }) => {
   );
 };
 
-export default TeachersToApprove;
+export default allUsersComponent;

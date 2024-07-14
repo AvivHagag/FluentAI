@@ -44,3 +44,24 @@ export const ApproveTeacher = async (id: string) => {
     console.error("Error Fetching All Teachers - ", error);
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const Users = await db.user.findMany({
+      where: { role: "STUDENT" && "TEACHER" },
+    });
+    return Users;
+  } catch (error) {
+    console.error("Error Fetching All Teachers - ", error);
+  }
+};
+
+export const DeleteUser = async (id: string) => {
+  try {
+    await db.user.delete({
+      where: { id },
+    });
+  } catch (error) {
+    console.error("Error Fetching All Teachers - ", error);
+  }
+};

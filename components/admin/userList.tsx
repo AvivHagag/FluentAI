@@ -1,4 +1,3 @@
-// components/UserList.tsx
 import { Button } from "../ui/button";
 import HashLoader from "react-spinners/HashLoader";
 import { useState } from "react";

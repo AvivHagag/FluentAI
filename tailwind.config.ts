@@ -26,6 +26,7 @@ const config = {
       colors: {
         lightBeige: "#EAE7DC",
         mediumBeige: "#D8C3A5",
+        darkBeige: "#D2B48C",
         grayish: "#8E8D8A",
         lightRed: "#E98074",
         darkRed: "#E85A4F",
@@ -91,6 +92,8 @@ const config = {
           strong: colors.gray[900],
           inverted: colors.white,
         },
+        lightRed: "#E98074",
+        darkBeige: "#D2B48C",
         grayish: "#8E8D8A",
         darkRed: "#E85A4F",
       },
@@ -168,7 +171,7 @@ const config = {
     },
     {
       pattern:
-        /^(bg-(?:grayish|darkRed)|text-(?:grayish|darkRed)|border-(?:grayish|darkRed)|ring-(?:grayish|darkRed)|stroke-(?:grayish|darkRed)|fill-(?:grayish|darkRed))$/,
+        /^(bg-(?:lightRed|darkBeige|grayish|darkRed)|text-(?:lightRed|darkBeige|grayish|darkRed)|border-(?:lightRed|darkBeige|grayish|darkRed)|ring-(?:lightRed|darkBeige|grayish|darkRed)|stroke-(?:lightRed|darkBeige|grayish|darkRed)|fill-(?:lightRed|darkBeige|grayish|darkRed))$/,
       variants: ["hover", "ui-selected"],
     },
   ],

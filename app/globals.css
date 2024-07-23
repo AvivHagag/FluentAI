@@ -93,4 +93,5 @@ body,
   border-radius: 0.5rem;
   border-color: #e98074;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  direction: rtl;
 }

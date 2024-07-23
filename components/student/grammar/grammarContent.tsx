@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GrammarRequest } from "@/lib/openai";
+import { studentSelfLearningAnswer } from "@/lib/ServerActions/ServerActions";
 import { useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -41,11 +42,23 @@ export default function GrammarContent() {
     }
   };
 
-  const handleAnswerSubmit = () => {
+  const handleAnswerSubmit = async () => {
     if (userAnswer.trim().toLowerCase() === response.correct.toLowerCase()) {
       setAnswer({ hasAnswered: true, isCorrect: true });
+      await studentSelfLearningAnswer(
+        "grammar",
+        response.mistake,
+        response.correct,
+        true
+      );
     } else {
       setAnswer({ hasAnswered: true, isCorrect: false });
+      await studentSelfLearningAnswer(
+        "grammar",
+        response.mistake,
+        response.correct,
+        false
+      );
     }
   };
 

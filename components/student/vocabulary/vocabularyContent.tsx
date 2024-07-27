@@ -10,6 +10,7 @@ import {
 } from "@/lib/vocabulary-random";
 import { useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
+import Hint from "../Hint";
 
 interface VocabularyData {
   words: string[];
@@ -30,6 +31,7 @@ export default function VocabularyContent() {
   }>({ hasAnswered: false, isCorrect: false });
   const [Error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hintText, setHintText] = useState<string>();
   const Levels = [
     { name: "Easy", label: "Easy" },
     { name: "Medium", label: "Medium" },
@@ -75,6 +77,7 @@ export default function VocabularyContent() {
   const handleAnswerSubmit = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setHintText("");
     const ChosenAnswer = event.target.value;
     setUserAnswer(ChosenAnswer);
     if (
@@ -154,9 +157,27 @@ export default function VocabularyContent() {
                     </div>
                     {!answer.hasAnswered ? (
                       <div className="text-xs sm:text-xs md:text-sm py-2">
-                        <Label className=" text-darkRed font-medium">
-                          Select the right answer:
-                        </Label>
+                        <div className="flex justify-between">
+                          <div>
+                            <Label className=" text-darkRed font-medium">
+                              Select the right answer:
+                            </Label>
+                            {hintText ? (
+                              <Label
+                                className=" text-darkRed font-medium"
+                                dir="rtl"
+                              >
+                                <br />
+                                {hintText}
+                              </Label>
+                            ) : null}
+                          </div>
+                          <Hint
+                            setHintText={setHintText}
+                            answerForHint={null}
+                            textForHint={response.words[currentIndex]}
+                          />
+                        </div>
                         <div className="mt-1">
                           <form>
                             {fourAnswersArray[currentIndex]?.map(

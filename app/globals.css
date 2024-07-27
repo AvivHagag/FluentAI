@@ -86,3 +86,12 @@ body,
       hue-rotate(331deg) brightness(97%) contrast(100%);
   }
 }
+
+.custom-tooltip .recharts-tooltip-wrapper {
+  background-color: #eae7dc;
+  color: #e98074;
+  border-radius: 0.5rem;
+  border-color: #e98074;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+}

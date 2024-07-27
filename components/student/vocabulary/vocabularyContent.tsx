@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { OpenQuestionsRequest, vocabularyRequest } from "@/lib/openai";
+import { studentSelfLearningAnswer } from "@/lib/ServerActions/ServerActions";
 import {
   easyAnswersVocabulary,
   hardAnswersVocabulary,
@@ -71,7 +72,9 @@ export default function VocabularyContent() {
     setFourAnswersArray(tempFourAnswersArray);
   };
 
-  const handleAnswerSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAnswerSubmit = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const ChosenAnswer = event.target.value;
     setUserAnswer(ChosenAnswer);
     if (
@@ -79,8 +82,20 @@ export default function VocabularyContent() {
       fourAnswersArray[currentIndex][Number(ChosenAnswer)]
     ) {
       setAnswer({ hasAnswered: true, isCorrect: true });
+      await studentSelfLearningAnswer(
+        "vocabulary",
+        response.words[currentIndex],
+        response.answers[currentIndex],
+        true
+      );
     } else {
       setAnswer({ hasAnswered: true, isCorrect: false });
+      await studentSelfLearningAnswer(
+        "vocabulary",
+        response.words[currentIndex],
+        response.answers[currentIndex],
+        false
+      );
     }
   };
 

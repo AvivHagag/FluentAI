@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { OpenQuestionsRequest } from "@/lib/openai";
+import { studentSelfLearningAnswer } from "@/lib/ServerActions/ServerActions";
 import { useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -42,13 +43,27 @@ export default function OpenQuestionsContent() {
     }
   };
 
-  const handleAnswerSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAnswerSubmit = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const ChosenAnswer = event.target.value;
     setUserAnswer(ChosenAnswer);
     if (ChosenAnswer == response.correctAnswer) {
       setAnswer({ hasAnswered: true, isCorrect: true });
+      await studentSelfLearningAnswer(
+        "openQuestions",
+        "Text: " + response.paragraph + "\n" + "Question: " + response.question,
+        response.correctAnswer,
+        true
+      );
     } else {
       setAnswer({ hasAnswered: true, isCorrect: false });
+      await studentSelfLearningAnswer(
+        "openQuestions",
+        "Text: " + response.paragraph + "\n" + "Question: " + response.question,
+        response.correctAnswer,
+        false
+      );
     }
   };
 

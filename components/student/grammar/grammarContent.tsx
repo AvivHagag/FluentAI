@@ -1,10 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { GrammarRequest } from "@/lib/openai";
 import { studentSelfLearningAnswer } from "@/lib/ServerActions/ServerActions";
 import { useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
+import Hint from "../Hint";
 
 export default function GrammarContent() {
   const [level, setLevel] = useState<string | null>(null);
@@ -18,6 +20,7 @@ export default function GrammarContent() {
     isCorrect: boolean;
   }>({ hasAnswered: false, isCorrect: false });
   const [Error, setError] = useState<string | null>(null);
+  const [hintText, setHintText] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const Levels = [
     { name: "Easy", label: "Easy" },
@@ -43,6 +46,7 @@ export default function GrammarContent() {
   };
 
   const handleAnswerSubmit = async () => {
+    setUserAnswer("");
     if (userAnswer.trim().toLowerCase() === response.correct.toLowerCase()) {
       setAnswer({ hasAnswered: true, isCorrect: true });
       await studentSelfLearningAnswer(
@@ -105,8 +109,26 @@ export default function GrammarContent() {
               <>
                 {!Error ? (
                   <div className="flex flex-col m-1 sm:m-2 mb-4">
-                    <div className="text-base sm:text-xl text-black">
-                      {response.mistake}
+                    <div className="flex justify-between">
+                      <div>
+                        <div className="text-base sm:text-xl text-black">
+                          {response.mistake}
+                        </div>
+                        {hintText ? (
+                          <Label
+                            className=" text-darkRed font-medium"
+                            dir="rtl"
+                          >
+                            <br />
+                            {hintText}
+                          </Label>
+                        ) : null}
+                      </div>
+                      <Hint
+                        setHintText={setHintText}
+                        answerForHint={response.correct}
+                        textForHint={response.mistake}
+                      />
                     </div>
                     {!answer.hasAnswered ? (
                       <div className="flex flex-col xs:flex-row xs:space-y-0 xs:space-x-2 space-y-2 py-1">

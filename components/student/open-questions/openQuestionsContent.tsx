@@ -5,6 +5,7 @@ import { OpenQuestionsRequest } from "@/lib/openai";
 import { studentSelfLearningAnswer } from "@/lib/ServerActions/ServerActions";
 import { useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
+import Hint from "../Hint";
 
 export default function OpenQuestionsContent() {
   const [level, setLevel] = useState<string | null>(null);
@@ -14,6 +15,7 @@ export default function OpenQuestionsContent() {
     answers: ["1", "2", "3", "4"],
     correctAnswer: "",
   });
+  console.log(response);
   const [userAnswer, setUserAnswer] = useState("");
   const [answer, setAnswer] = useState<{
     hasAnswered: boolean;
@@ -21,6 +23,7 @@ export default function OpenQuestionsContent() {
   }>({ hasAnswered: false, isCorrect: false });
   const [Error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hintText, setHintText] = useState<string>();
   const Levels = [
     { name: "Easy", label: "Easy" },
     { name: "Medium", label: "Medium" },
@@ -46,6 +49,7 @@ export default function OpenQuestionsContent() {
   const handleAnswerSubmit = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setHintText("");
     const ChosenAnswer = event.target.value;
     setUserAnswer(ChosenAnswer);
     if (ChosenAnswer == response.correctAnswer) {
@@ -116,6 +120,7 @@ export default function OpenQuestionsContent() {
                       </span>
                       {response.paragraph}
                     </div>
+
                     <div className="text-xs sm:text-xs md:text-sm text-black py-1">
                       <span className="text-darkRed font-semibold">
                         Question:{" "}
@@ -124,9 +129,33 @@ export default function OpenQuestionsContent() {
                     </div>
                     {!answer.hasAnswered ? (
                       <div className="text-xs sm:text-xs md:text-sm py-2">
-                        <Label className=" text-darkRed font-medium">
-                          Select the right answer:
-                        </Label>
+                        <div className="flex justify-between">
+                          <div>
+                            <Label className=" text-darkRed font-medium">
+                              Select the right answer:
+                            </Label>
+                            {hintText ? (
+                              <Label
+                                className=" text-darkRed font-medium"
+                                dir="rtl"
+                              >
+                                <br />
+                                רמז: {hintText}
+                              </Label>
+                            ) : null}
+                          </div>
+                          <Hint
+                            setHintText={setHintText}
+                            answerForHint={
+                              response.answers[Number(response.correctAnswer)]
+                            }
+                            textForHint={
+                              response.paragraph +
+                              "\n the question is:" +
+                              response.question
+                            }
+                          />
+                        </div>
                         <div className="mt-1">
                           <form>
                             {Object.entries(response.answers).map(

@@ -79,6 +79,7 @@ model Teacher {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String @unique
   tasks     TeacherTask[]
+  rating Rating[]
 }
 
 model Student {
@@ -92,6 +93,7 @@ model Student {
   userId      String @unique
   answers     StudentAnswer[]
   tasks       TeacherTask[]
+  rating      Rating?
 }
 
 model Question {
@@ -126,4 +128,13 @@ model TeacherTask {
   teacher     Teacher    @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   teacherId   String
   questions   Question[]
+}
+
+model Rating {
+  id          String    @id @default(cuid())
+  score       Int
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId   String    @unique
+  teacher     Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherId   String
 }

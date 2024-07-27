@@ -73,13 +73,25 @@ const SigninButton: React.FC<SigninButtonProps> = ({ session }) => {
         <DropdownMenuSeparator />
         <ul className="flex flex-col items-center space-y-2 text-sm sm:text-base">
           {session.user.role === "ADMIN" && (
+            <>
+              <li className="hover:text-grayish hover:scale-105">
+                <Link href="/admin">אדמין פאנל</Link>
+              </li>
+              <li className="hover:text-grayish hover:scale-105">
+                <Link href="/admin/setting">הגדרות</Link>
+              </li>
+            </>
+          )}
+          {session.user.role === "STUDENT" && (
             <li className="hover:text-grayish hover:scale-105">
-              <Link href="/admin">אדמין פאנל</Link>
+              <Link href="/student/setting">הגדרות</Link>
             </li>
           )}
-          <li className="hover:text-grayish hover:scale-105">
-            <Link href="/setting">הגדרות</Link>
-          </li>
+          {session.user.role === "TEACHER" && (
+            <li className="hover:text-grayish hover:scale-105">
+              <Link href="/teacher/setting">הגדרות</Link>
+            </li>
+          )}
           <Button
             variant="destructive"
             className="hover:scale-105 bg-darkRed"

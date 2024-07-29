@@ -1,14 +1,12 @@
-import { StudentAnswer } from "@prisma/client";
 import PieChartComponent from "../stats/pieChartComponent";
-import { studentStats } from "@/lib/ServerActions/ServerActions";
 
 interface Stats {
   id: string;
   studentId: string;
-  question: QuestionType;
   questionId: string;
   givenAnswer: string;
   isCorrect: boolean;
+  question?: QuestionType;
 }
 
 interface QuestionType {
@@ -16,7 +14,7 @@ interface QuestionType {
 }
 
 interface StudentStatisticsProps {
-  id: string;
+  studentStats: Stats[];
 }
 
 const processStatsData = (stats: Stats[]) => {
@@ -24,8 +22,10 @@ const processStatsData = (stats: Stats[]) => {
     string,
     { type: string; correctCount: number; totalCount: number }
   > = {};
-
   stats.forEach((stat) => {
+    if (!stat.question) {
+      return;
+    }
     const { type } = stat.question;
     if (!processedData[type]) {
       processedData[type] = { type, correctCount: 0, totalCount: 0 };
@@ -39,13 +39,14 @@ const processStatsData = (stats: Stats[]) => {
   return Object.values(processedData);
 };
 
-const StudentStatistics: React.FC<StudentStatisticsProps> = async ({ id }) => {
-  const Stats = await studentStats(id);
-  const processedStats = processStatsData(Stats);
+const StudentStatistics: React.FC<StudentStatisticsProps> = async ({
+  studentStats,
+}) => {
+  const processedStats = processStatsData(studentStats);
   return (
     <>
       {processedStats.map((item) => (
-        <div className="w-1/3" key={item.type}>
+        <div className="w-1/4" key={item.type}>
           <PieChartComponent item={item} />
         </div>
       ))}

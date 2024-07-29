@@ -176,6 +176,7 @@ export default function VocabularyContent() {
                             setHintText={setHintText}
                             answerForHint={null}
                             textForHint={response.words[currentIndex]}
+                            type="vocabulary"
                           />
                         </div>
                         <div className="mt-1">

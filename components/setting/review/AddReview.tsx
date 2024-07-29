@@ -4,36 +4,44 @@ import StarRating from "./starRating";
 import { Button } from "@/components/ui/button";
 import { AddReviewToTeacher } from "@/lib/ServerActions/ServerActions";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
 
 interface AddReviewProps {
   review: number | null | undefined;
-  teacherId: string | undefined;
+  targetId: string | undefined;
+  comnnetLabel?: string | null | undefined;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  reviewType: "teacher" | "content";
 }
 
 const AddReview: React.FC<AddReviewProps> = ({
   review,
-  teacherId,
+  targetId,
+  comnnetLabel,
   setIsLoading,
+  reviewType,
 }) => {
   const router = useRouter();
   const [rating, setRating] = useState<number>();
   const [ratingError, setRatingError] = useState<boolean>(false);
-
+  const [value, setValue] = useState<string>();
   const handleSaveChanges = async () => {
-    if (!rating || !teacherId) {
+    if (!rating || !targetId) {
       return;
     }
-    const ExistReview = review != null;
     setIsLoading(true);
-    await AddReviewToTeacher(ExistReview, rating, teacherId);
+    if (reviewType === "teacher") {
+      await AddReviewToTeacher(review != null, rating, targetId);
+    } else if (reviewType === "content") {
+      // await AddReviewToContent(review != null, rating, targetId);
+    }
     router.refresh();
     setIsLoading(false);
   };
   return (
-    <div className="flex flex-col mx-auto py-4" dir="rtl">
+    <div className="flex flex-col mx-auto py-4 w-full px-2" dir="rtl">
       <h3 className="text-center text-xl sm:text-2xl text-lightRed">
-        בחר דירוג למורה:
+        {reviewType === "teacher" ? "בחר דירוג למורה:" : "בחר דירוג לתוכן:"}
       </h3>
       <div className="flex flex-col items-center my-2 justify-center">
         <StarRating
@@ -56,6 +64,24 @@ const AddReview: React.FC<AddReviewProps> = ({
               {rating}/5
             </p>
           )}
+        </>
+      )}
+      {reviewType === "content" && (
+        <>
+          <h3 className="text-center text-xl sm:text-2xl text-lightRed">
+            הוספת הערה:
+          </h3>
+          <Input
+            type="text"
+            className="my-1 p-1 sm:-2 border-lightRed text-darkRed w-full"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder={
+              comnnetLabel
+                ? comnnetLabel
+                : "כתוב פה הערה על התוכן המופק באמצעות בינה מלאכותית .."
+            }
+          />
         </>
       )}
       <div className="flex flex-col items-center justify-center mt-8 ">

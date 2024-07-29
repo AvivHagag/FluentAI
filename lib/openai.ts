@@ -39,19 +39,22 @@ export const getHint = async (
   Type: string
 ) => {
   let prompt;
-  console.log(textForHint);
-  console.log(answerForHint);
   switch (Type.toLowerCase()) {
     case "vocabulary":
-      prompt =
-        "Provide a hint for the English word '${textForHint}' and how its commonly used,The hint should be provided in Hebrew .the answer need to return in JSON format.The JSON object should include the following key: 'Hint' and his value will be the hint.";
+      prompt = `Provide a hint for the English word "${textForHint}" and how its commonly used,The hint should be provided in Hebrew .the answer need to return in JSON format.The JSON object should include the following key: 'Hint' and his value will be the hint.`;
       break;
     case "grammar":
-      prompt = `Provide a hint in Hebrew translations to help correct the grammatical error in the following sentence: '${textForHint}'. the hint should be in JSON foramt`;
+      prompt = `Provide a hint to correct the grammatical error in the following sentence: “${textForHint}”. Specify where the error is located, and use the correct version of the sentence: “${answerForHint}” as a reference without revealing the correct answer.\n
+      The hint should be provided in Hebrew.\n
+      The hint should be in JSON format.\n 
+      The JSON object should include the following key: 'Hint' and his value will be the hint.`;
       break;
     case "openquestion":
-      prompt = `Based on the answer provided, create a context clue in Hebrew that will help correctly refer to the text and question specified. The hint should help in understanding the answer. Make sure the clue provides useful context or a hint without revealing the answer directly.
-Return this hint in JSON format with the key 'hint'.`;
+      prompt = `answer - "${answerForHint}", question - "${textForHint} : \n.
+      Based on the answer provided, create a context clue in Hebrew that will help correctly refer to the text and question specified. The hint should help in understanding the answer. Make sure the clue provides useful context or a hint without revealing the answer directly.
+      The hint should be provided in Hebrew.\n
+      The hint should be in JSON format.\n 
+      The JSON object should include the following key: 'Hint' and his value will be the hint`;
       break;
     default:
       return { error: "Unknown type" };

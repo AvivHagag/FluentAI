@@ -80,6 +80,7 @@ model Teacher {
   userId    String @unique
   tasks     TeacherTask[]
   rating Rating[]
+  contentRating ContentRating?
 }
 
 model Student {
@@ -137,4 +138,14 @@ model Rating {
   studentId   String    @unique
   teacher     Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   teacherId   String
+}
+
+model ContentRating {
+  id        String    @id @default(cuid())
+  comment String?
+  teacher   Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherId String
+  rating    Int
+
+  @@unique([teacherId])
 }

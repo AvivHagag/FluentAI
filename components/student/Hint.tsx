@@ -9,19 +9,20 @@ interface HintProps {
   setHintText: Dispatch<SetStateAction<string | undefined>>;
   textForHint: string;
   answerForHint: string | null;
+  type: string;
 }
 
 const Hint: React.FC<HintProps> = ({
   setHintText,
   textForHint,
   answerForHint,
+  type,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleHint = async () => {
     setIsLoading(true);
-    const Data = await getHint(textForHint, answerForHint, "vocabulary");
-    console.log(Data);
+    const Data = await getHint(textForHint, answerForHint, type);
     if (Data && Data.Hint) {
       setHintText(Data.Hint);
     }

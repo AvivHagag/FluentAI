@@ -6,12 +6,14 @@ import CategoriesLinks from "./CategoriesLinks";
 
 interface SideBarChooseProps {
   categoryChosen: string;
-  handleChooesn: (chosenName: string) => void;
+  handleChosen: (chosenName: string) => void;
+  userRole: "student" | "teacher";
 }
 
 const SideBarChoose: React.FC<SideBarChooseProps> = ({
   categoryChosen,
-  handleChooesn,
+  handleChosen,
+  userRole,
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -57,7 +59,8 @@ const SideBarChoose: React.FC<SideBarChooseProps> = ({
           <CategoriesLinks
             isSidebarOpen={isSidebarOpen}
             categoryChosen={categoryChosen}
-            handleChooesn={handleChooesn}
+            handleChosen={handleChosen}
+            userRole={userRole}
           />
         </div>
       </div>

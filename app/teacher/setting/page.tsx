@@ -1,10 +1,10 @@
 import React from "react";
 import { auth } from "../../../auth";
 import ChooseCategory from "@/components/setting/ChooseCategory";
-import { getMyTeacher } from "@/lib/ServerActions/ServerActions";
+import { getContentRating } from "@/lib/ServerActions/ServerActions";
 const SettingPage = async () => {
   const session = await auth();
-  const teacher = await getMyTeacher();
+  const Content = await getContentRating();
   return (
     <div>
       <h2
@@ -16,8 +16,8 @@ const SettingPage = async () => {
       {session && (
         <ChooseCategory
           session={session}
-          teacher={teacher}
-          userRole="student"
+          Content={Content}
+          userRole="teacher"
         />
       )}
     </div>

@@ -4,10 +4,13 @@ import SideBarChosen from "./side-bar-chosen";
 import UserProfile from "./profile/profile";
 import TeacherReview from "./review/teacherReview";
 import { Session } from "next-auth";
+import ContentRating from "./review/contentRating";
 
 interface ChooseCategoryProps {
   session: Session;
-  teacher: TeacherWithScore | null | undefined;
+  teacher?: TeacherWithScore | null | undefined;
+  Content?: ContentType | null | undefined;
+  userRole: "student" | "teacher";
 }
 
 interface TeacherWithScore {
@@ -16,14 +19,21 @@ interface TeacherWithScore {
   image: string | null;
   score: number | null;
 }
+interface ContentType {
+  id: string;
+  comment: string | null;
+  teacherId: string;
+  rating: number;
+}
 
 const ChooseCategory: React.FC<ChooseCategoryProps> = ({
   session,
   teacher,
+  Content,
+  userRole,
 }) => {
   const [categoryChosen, setCategoryChosen] = useState<string>("profile");
-
-  const handleChooesn = (ChosenName: string) => {
+  const handleChosen = (ChosenName: string) => {
     setCategoryChosen(ChosenName);
   };
 
@@ -33,13 +43,17 @@ const ChooseCategory: React.FC<ChooseCategoryProps> = ({
         <div className="flex justify-center min-h-screen md:min-h-[500px] mx-2 lg:mx-8 2xl:mx-16 border border-mediumBeige shadow-xl rounded-lg bg-lightBeige">
           <div className="min-h-screen md:min-h-[500px] flex-grow mx-2">
             {categoryChosen === "profile" && <UserProfile session={session} />}
-            {categoryChosen === "teacher" && (
+            {categoryChosen === "teacher" && userRole === "student" && (
               <TeacherReview teacher={teacher} />
+            )}
+            {categoryChosen === "contentRating" && userRole === "teacher" && (
+              <ContentRating Content={Content} />
             )}
           </div>
           <SideBarChosen
             categoryChosen={categoryChosen}
-            handleChooesn={handleChooesn}
+            handleChosen={handleChosen}
+            userRole={userRole}
           />
         </div>
       }

@@ -13,9 +13,8 @@ export default function OpenQuestionsContent() {
     paragraph: "",
     question: "",
     answers: ["1", "2", "3", "4"],
-    correctAnswer: "",
+    correctAnswer: 1,
   });
-  console.log(response);
   const [userAnswer, setUserAnswer] = useState("");
   const [answer, setAnswer] = useState<{
     hasAnswered: boolean;
@@ -52,12 +51,15 @@ export default function OpenQuestionsContent() {
     setHintText("");
     const ChosenAnswer = event.target.value;
     setUserAnswer(ChosenAnswer);
-    if (ChosenAnswer == response.correctAnswer) {
+    if (
+      response.answers[parseInt(ChosenAnswer, 10)] ===
+      response.answers[response.correctAnswer]
+    ) {
       setAnswer({ hasAnswered: true, isCorrect: true });
       await studentSelfLearningAnswer(
         "openQuestions",
         "Text: " + response.paragraph + "\n" + "Question: " + response.question,
-        response.correctAnswer,
+        response.correctAnswer.toString(),
         true
       );
     } else {
@@ -65,7 +67,7 @@ export default function OpenQuestionsContent() {
       await studentSelfLearningAnswer(
         "openQuestions",
         "Text: " + response.paragraph + "\n" + "Question: " + response.question,
-        response.correctAnswer,
+        response.correctAnswer.toString(),
         false
       );
     }
@@ -74,6 +76,7 @@ export default function OpenQuestionsContent() {
   const handleNextQuestion = () => {
     setIsLoading(true);
     setUserAnswer("");
+    setHintText("");
     setAnswer({ hasAnswered: false, isCorrect: false });
     if (level) {
       handleRequest(level);
@@ -147,13 +150,15 @@ export default function OpenQuestionsContent() {
                           <Hint
                             setHintText={setHintText}
                             answerForHint={
-                              response.answers[Number(response.correctAnswer)]
+                              response.answers[response.correctAnswer]
                             }
                             textForHint={
+                              "The Text: " +
                               response.paragraph +
-                              "\n the question is:" +
+                              ".\nThe question is: " +
                               response.question
                             }
+                            type="openquestion"
                           />
                         </div>
                         <div className="mt-1">
@@ -205,8 +210,8 @@ export default function OpenQuestionsContent() {
                                 תשובה נכונה:{" "}
                               </span>
                               {Object.entries(response.answers).map(
-                                ([key, value]) => {
-                                  if (response.correctAnswer === key) {
+                                ([key, value], index) => {
+                                  if (index === response.correctAnswer) {
                                     return (
                                       <div
                                         className="text-grayish text-center mx-1"
@@ -235,11 +240,11 @@ export default function OpenQuestionsContent() {
                             >
                               התשובה הנכונה היא :
                               {Object.entries(response.answers).map(
-                                ([key, value]) => {
-                                  if (response.correctAnswer === key) {
+                                ([key, value], index) => {
+                                  if (index === response.correctAnswer) {
                                     return (
                                       <div
-                                        className="text-grayish mx-1"
+                                        className="text-grayish text-center mx-1"
                                         key={key}
                                       >
                                         {value}

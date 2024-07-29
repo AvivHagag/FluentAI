@@ -38,7 +38,6 @@ export default function GrammarContent() {
       const Result = await GrammarRequest(LevelChosen);
       setResponse(Result);
     } catch (error) {
-      console.log(error);
       setError("מצטערים, אך אירעה שגיאה בעת יצירת הבקשה.");
     } finally {
       setIsLoading(false);
@@ -46,6 +45,7 @@ export default function GrammarContent() {
   };
 
   const handleAnswerSubmit = async () => {
+    setHintText("");
     setUserAnswer("");
     if (userAnswer.trim().toLowerCase() === response.correct.toLowerCase()) {
       setAnswer({ hasAnswered: true, isCorrect: true });
@@ -128,6 +128,7 @@ export default function GrammarContent() {
                         setHintText={setHintText}
                         answerForHint={response.correct}
                         textForHint={response.mistake}
+                        type="grammar"
                       />
                     </div>
                     {!answer.hasAnswered ? (

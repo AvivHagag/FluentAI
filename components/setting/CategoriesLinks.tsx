@@ -1,27 +1,44 @@
 "use client";
 import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
 import AcademicCapIcon from "@heroicons/react/24/outline/AcademicCapIcon";
-
-import Image from "next/image";
+import ChartBarIcon from "@heroicons/react/24/outline/ChartBarIcon";
 
 interface CategoriesLinksProps {
   isSidebarOpen: boolean;
   categoryChosen: string;
-  handleChooesn: (chosenName: string) => void;
+  handleChosen: (chosenName: string) => void;
+  userRole: "student" | "teacher";
 }
 
 const CategoriesLinks: React.FC<CategoriesLinksProps> = ({
   isSidebarOpen,
   categoryChosen,
-  handleChooesn,
+  handleChosen,
+  userRole,
 }) => {
-  const categories = [
-    { name: "profile", label: "פרופיל", icon: UserCircleIcon },
-    { name: "teacher", label: "מורה", icon: AcademicCapIcon },
-  ];
+  userRole;
   const handleLink = (categoryName: string) => {
-    handleChooesn(categoryName);
+    handleChosen(categoryName);
   };
+
+  const getCategories = () => {
+    switch (userRole) {
+      case "student":
+        return [
+          { name: "profile", label: "פרופיל", icon: UserCircleIcon },
+          { name: "teacher", label: "מורה", icon: AcademicCapIcon },
+        ];
+      case "teacher":
+        return [
+          { name: "profile", label: "פרופיל", icon: UserCircleIcon },
+          { name: "contentRating", label: "דירוג תוכן", icon: ChartBarIcon },
+        ];
+      default:
+        return [];
+    }
+  };
+  const categories = getCategories();
+
   return (
     <div className="space-y-4 sm:space-y-3">
       {categories.map((category) => (

@@ -243,3 +243,29 @@ export const AddReviewToTeacher = async (
     console.error("Error Changing User Details in DB ", error);
   }
 };
+
+export const getContentRating = async () => {
+  try {
+    const session = await auth();
+    if (!session) return;
+    const teacher = await db.teacher.findUnique({
+      where: { userId: session.user.id },
+    });
+    if (!teacher) {
+      console.error("Teacher not found for userId:", session.user.id);
+      return null;
+    }
+    const contentRating = await db.rating.findFirst({
+      where: { teacherId: teacher.id },
+    });
+
+    if (!contentRating) {
+      console.warn("No rating found for teacherId:", teacher.id);
+      return null;
+    }
+
+    return contentRating;
+  } catch (error) {
+    console.error("Error Changing User Details in DB ", error);
+  }
+};

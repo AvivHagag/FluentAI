@@ -9,9 +9,9 @@ interface ContentRatingProps {
 
 interface ContentType {
   id: string;
-  comment: string | null;
-  teacherId: string;
   rating: number;
+  teacherId: string;
+  comment?: string | null;
 }
 
 const ContentRating: React.FC<ContentRatingProps> = ({ Content }) => {

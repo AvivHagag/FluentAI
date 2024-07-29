@@ -44,8 +44,8 @@ const UserProfile: React.FC<ProfileProps> = ({ session }) => {
                     <div className="flex-shrink-0 relative">
                       <Image
                         src={imagePreviewUrl}
-                        height={128}
                         width={128}
+                        height={128}
                         alt={`${session.user.name}'s picture`}
                         className="rounded-full border border-black dark:border-gray-600 shadow-lg dark:shadow-gray-700"
                       />

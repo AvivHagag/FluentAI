@@ -19,11 +19,12 @@ interface TeacherWithScore {
   image: string | null;
   score: number | null;
 }
+
 interface ContentType {
   id: string;
-  comment: string | null;
-  teacherId: string;
   rating: number;
+  teacherId: string;
+  comment?: string | null;
 }
 
 const ChooseCategory: React.FC<ChooseCategoryProps> = ({

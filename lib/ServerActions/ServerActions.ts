@@ -255,7 +255,7 @@ export const getContentRating = async () => {
       console.error("Teacher not found for userId:", session.user.id);
       return null;
     }
-    const contentRating = await db.rating.findFirst({
+    const contentRating = await db.contentRating.findFirst({
       where: { teacherId: teacher.id },
     });
 
@@ -267,5 +267,43 @@ export const getContentRating = async () => {
     return contentRating;
   } catch (error) {
     console.error("Error Changing User Details in DB ", error);
+  }
+};
+
+export const AddReviewToContent = async (
+  existReview: boolean,
+  comment: string,
+  rating: number,
+  targetId: string | undefined
+) => {
+  try {
+    const session = await auth();
+    if (!session) return;
+
+    const teacher = await db.teacher.findUnique({
+      where: { userId: session.user.id },
+    });
+
+    if (!teacher) {
+      console.error("Teacher record not found for the current user");
+      return;
+    }
+
+    if (!existReview) {
+      await db.contentRating.create({
+        data: {
+          comment,
+          rating,
+          teacher: { connect: { id: teacher.id } },
+        },
+      });
+    } else {
+      await db.contentRating.update({
+        where: { id: targetId },
+        data: { comment, rating },
+      });
+    }
+  } catch (error) {
+    console.error("Error adding or updating content review in DB", error);
   }
 };

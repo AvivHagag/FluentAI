@@ -34,7 +34,7 @@ const StudentList: React.FC<StudentListProps> = ({
                   <div key={student.id}>
                     {student.name && (
                       <div className="flex flex-col items-center m-2 hover:scale-[80%] scale-75">
-                        <Link href={`/teacher/mystudent/${student.id}`}>
+                        <Link href={`/teacher/mystudent?id=${student.id}`}>
                           <UserCard name={student.name} image={student.image} />
                         </Link>
                       </div>

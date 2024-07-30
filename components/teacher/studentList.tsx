@@ -13,7 +13,7 @@ const StudentList: React.FC<StudentListProps> = ({
 }) => {
   return (
     <div className="my-4">
-      <div className="text-דצ md:text-base text-darkRed mb-1 sm:mb-2" dir="rtl">
+      <div className="text-sm md:text-base text-darkRed mb-1 sm:mb-2" dir="rtl">
         בחירת תלמיד לפי שם או שם משפחה:
       </div>
       <div className="border border-grayish rounded-2xl">

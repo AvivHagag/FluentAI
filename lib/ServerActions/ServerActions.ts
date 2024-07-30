@@ -3,6 +3,7 @@ import { TeacherNotApprovedRoute } from "@/routes";
 import { db } from "../db";
 import { auth } from "@/auth";
 import { Select } from "@tremor/react";
+import { StudentAnswer } from "@prisma/client";
 
 export const getAllTeachersNameAndID = async () => {
   try {
@@ -131,7 +132,7 @@ export const studentStats = async (userId: string | undefined) => {
     });
     return studentAnswers;
   } catch (error) {
-    console.error("Error retrieving student answers:", error);
+    console.error("Error getting student stats", error);
     throw error;
   }
 };
@@ -194,7 +195,7 @@ export const getMyTeacher = async () => {
       score: teacher?.rating?.score || null,
     };
   } catch (error) {
-    console.error("Error Changing User Details in DB ", error);
+    console.error("Error getting the teacher", error);
   }
 };
 
@@ -266,7 +267,7 @@ export const getContentRating = async () => {
 
     return contentRating;
   } catch (error) {
-    console.error("Error Changing User Details in DB ", error);
+    console.error("Error getting content rating ", error);
   }
 };
 
@@ -305,5 +306,43 @@ export const AddReviewToContent = async (
     }
   } catch (error) {
     console.error("Error adding or updating content review in DB", error);
+  }
+};
+
+export const getAllStudentsByTeacher = async () => {
+  try {
+    const session = await auth();
+    if (!session) return { allStudents: [], combinedAnswers: [] };
+    const teacherWithStudents = await db.teacher.findUnique({
+      where: { userId: session.user.id },
+      select: {
+        students: {
+          include: {
+            answers: {
+              include: {
+                question: {
+                  select: {
+                    type: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    const allStudents = teacherWithStudents?.students || [];
+    const combinedAnswers = allStudents.reduce(
+      (acc: StudentAnswer[], student) => {
+        acc.push(...student.answers);
+        return acc;
+      },
+      []
+    );
+
+    return { allStudents, combinedAnswers };
+  } catch (error) {
+    console.error("Error adding or updating content review in DB", error);
+    return { allStudents: [], combinedAnswers: [] };
   }
 };

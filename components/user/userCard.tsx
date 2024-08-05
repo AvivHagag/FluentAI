@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Image from "next/image";
 
 interface UserCardProps {
-  name: string;
+  name: string | null;
   image: string | null;
 }
 const UserCard: React.FC<UserCardProps> = ({ name, image }) => {
@@ -36,7 +36,7 @@ const UserCard: React.FC<UserCardProps> = ({ name, image }) => {
               </Avatar>{" "}
             </div>
           )}
-          <div className="text-center ">{name}</div>
+          {name && <div className="text-center ">{name}</div>}
         </>
       </div>
     </>

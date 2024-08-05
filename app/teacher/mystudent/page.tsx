@@ -8,7 +8,6 @@ export default async function MyStudent({
   searchParams: { [key: string]: string };
 }) {
   const studentData = await getStudentData(searchParams.id);
-  console.log(studentData?.tasks);
   let studentDataForCard;
   if (studentData) {
     studentDataForCard = {

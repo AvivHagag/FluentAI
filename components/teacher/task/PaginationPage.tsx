@@ -9,6 +9,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Separator } from "@/components/ui/separator";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 export function PaginationPage({
   questionAmount,
@@ -115,10 +116,14 @@ export function PaginationPage({
         <div>
           <Button
             variant={"outline"}
-            className="bg-lightBeige hover:bg-grayish/50 border border-lightRed rounded-full text-lightRed"
+            className="bg-lightBeige hover:bg-grayish/50 border border-lightRed rounded-md text-lightRed"
             onClick={() => AddQuesion()}
+            dir="rtl"
           >
-            הוספת שאלה
+            שלח משימה
+            <span>
+              <PaperAirplaneIcon className="h-6 w-6 rotate-180 mr-2" />
+            </span>
           </Button>
         </div>
       </div>

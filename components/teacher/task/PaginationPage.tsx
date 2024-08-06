@@ -15,14 +15,12 @@ export function PaginationPage({
   questionAmount,
   currentPage,
   setCurrentPage,
-  ScrollUp,
-  AddQuesion,
+  SendQuestion,
 }: {
   questionAmount: number;
   currentPage: number;
   setCurrentPage: (page: number) => void;
-  ScrollUp: () => void;
-  AddQuesion: () => void;
+  SendQuestion: () => void;
 }) {
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(questionAmount / 1); i++) {
@@ -39,14 +37,12 @@ export function PaginationPage({
   const handleNextPage = () => {
     if (currentPage < pageNumbers.length) {
       setCurrentPage(currentPage + 1);
-      ScrollUp();
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      ScrollUp();
     }
   };
 
@@ -117,7 +113,7 @@ export function PaginationPage({
           <Button
             variant={"outline"}
             className="bg-lightBeige hover:bg-grayish/50 border border-lightRed rounded-md text-lightRed"
-            onClick={() => AddQuesion()}
+            onClick={() => SendQuestion()}
             dir="rtl"
           >
             שלח משימה

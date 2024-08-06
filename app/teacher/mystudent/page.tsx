@@ -8,12 +8,17 @@ export default async function MyStudent({
   searchParams: { [key: string]: string };
 }) {
   const studentData = await getStudentData(searchParams.id);
-  let studentDataForCard;
+  let studentDataForCard, studentDataForTask;
   if (studentData) {
     studentDataForCard = {
       name: studentData?.name,
       image: studentData?.image,
       email: studentData?.user.email,
+    };
+    studentDataForTask = {
+      id: studentData.id,
+      tasks: studentData.tasks,
+      name: studentData?.name,
     };
   }
 
@@ -26,7 +31,7 @@ export default async function MyStudent({
             <StudentStatistics studentStats={studentData.answers} />
           )}
         </div>
-        {studentData && <Tasks studentId={studentData?.id} />}
+        {studentDataForTask && <Tasks {...studentDataForTask} />}
       </div>
     </>
   );

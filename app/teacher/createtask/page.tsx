@@ -9,7 +9,6 @@ export default async function CreateTask({
   const student = await getStudentById(searchParams.id);
   return (
     <>
-      {/* <div className="flex flex-col space-y-8 py-8 justify-center">hey</div> */}
       <h1
         className="pt-8 px-2 text-2xl sm:text-3xl lg:text-5xl text-center text-darkRed mb-4 sm:mb-8"
         dir="rtl"

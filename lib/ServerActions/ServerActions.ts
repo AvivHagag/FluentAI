@@ -353,7 +353,7 @@ export const getStudentData = async (id: string) => {
       where: { id },
       include: {
         answers: { include: { question: true } },
-        tasks: true,
+        tasks: { include: { questions: true } },
         user: { select: { email: true } },
       },
     });
@@ -440,19 +440,4 @@ export const createTaskToStudent = async (
       },
     },
   });
-};
-
-export const getStudentTasks = async (id: string) => {
-  try {
-    const tasks = await db.student.findUnique({
-      where: { id },
-      select: {
-        tasks: { include: { questions: true } },
-        name: true,
-      },
-    });
-    return tasks;
-  } catch (error) {
-    console.error("Error Getting Student Data", error);
-  }
 };

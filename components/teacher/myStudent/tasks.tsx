@@ -4,24 +4,24 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getStudentTasks } from "@/lib/ServerActions/ServerActions";
+import { TeacherTask } from "@prisma/client";
 import Link from "next/link";
 
 interface TasksProps {
-  studentId: string;
+  id: string;
+  name: string | null;
+  tasks: TeacherTask[] | null;
 }
 
-export async function Tasks({ studentId }: TasksProps) {
-  const StudentData = await getStudentTasks(studentId);
+export async function Tasks({ id, tasks, name }: TasksProps) {
   return (
     <>
       <div className="mx-auto my-2">
-        <Link href={`/teacher/createtask?id=${studentId}`}>
+        <Link href={`/teacher/createtask?id=${id}`}>
           <Button
             variant={"outline"}
             className="bg-lightBeige border border-lightRed rounded-full text-lightRed"
@@ -30,10 +30,10 @@ export async function Tasks({ studentId }: TasksProps) {
           </Button>
         </Link>
       </div>
-      {StudentData && (
+      {tasks && (
         <div className="flex flex-col justify-center w-2/3 mx-auto bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg shadow-xl backdrop-blur">
           <Table dir="rtl">
-            <TableCaption>המטלות האחרונות של {StudentData.name}</TableCaption>
+            <TableCaption>המטלות האחרונות של {name}</TableCaption>
             <TableHeader dir="rtl">
               <TableRow dir="rtl">
                 <TableHead className="text-right font-medium text-darkRed">
@@ -57,7 +57,7 @@ export async function Tasks({ studentId }: TasksProps) {
               </TableRow>
             </TableHeader>
             <TableBody dir="rtl">
-              {StudentData.tasks.map((task, index) => (
+              {tasks.map((task, index) => (
                 <TableRow key={task.id}>
                   <TableCell className="font-medium">{index + 1}</TableCell>
                   <TableCell className="font-medium">{task.id}</TableCell>

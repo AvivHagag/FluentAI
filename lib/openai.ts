@@ -33,6 +33,13 @@ export const vocabularyRequest = async (LevelChosen: string) => {
   return Result;
 };
 
+export const vocabularyRequestSingle = async (LevelChosen: string) => {
+  console.log("start");
+  const prompt = `Please provide one English word at the ${LevelChosen} difficulty level in JSON format. The JSON object should contain two arrays: 'words' for the single English word and 'answers' for the single Hebrew translations.`;
+  const Result = await generatePrompt(prompt);
+  return Result;
+};
+
 export const getHint = async (
   textForHint: string,
   answerForHint: string | null,

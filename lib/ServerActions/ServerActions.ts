@@ -441,3 +441,49 @@ export const createTaskToStudent = async (
     },
   });
 };
+
+export const getAllTaskByStudentID = async () => {
+  const session = await auth();
+  if (!session) {
+    return;
+  }
+  try {
+    const tasks = await db.teacherTask.findMany({
+      where: { student: { userId: session.user.id } },
+      include: {
+        questions: {
+          include: {
+            studentAnswers: true,
+          },
+        },
+      },
+    });
+    return tasks;
+  } catch (error) {
+    console.error("Error Getting Student Tasks", error);
+  }
+};
+
+export const saveStudentAnswerFromTask = async (
+  questionId: string,
+  answer: string,
+  correct: boolean
+) => {
+  const session = await auth();
+  if (!session) {
+    return;
+  }
+  try {
+    await db.studentAnswer.create({
+      data: {
+        givenAnswer: answer,
+        isCorrect: correct,
+        question: { connect: { id: questionId } },
+        student: { connect: { userId: session.user.id } },
+      },
+    });
+    console.log("Student answer saved successfully");
+  } catch (error) {
+    console.error("Error Saving Student Answer", error);
+  }
+};

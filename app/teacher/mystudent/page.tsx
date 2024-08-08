@@ -2,6 +2,7 @@ import StudentCard from "@/components/teacher/myStudent/studentCard";
 import StudentStatistics from "@/components/student/studentStatistics";
 import { getStudentData } from "@/lib/ServerActions/ServerActions";
 import { Tasks } from "@/components/teacher/myStudent/tasks";
+import TitleAndButton from "@/components/headerNav/TitleAndButton";
 export default async function MyStudent({
   searchParams,
 }: {
@@ -24,7 +25,10 @@ export default async function MyStudent({
 
   return (
     <>
-      <div className="flex flex-col space-y-8 py-8 justify-center">
+      <div className="w-2/3 mx-auto">
+        <TitleAndButton PageName={"דף תלמיד"} />
+      </div>
+      <div className="flex flex-col space-y-8 justify-center">
         {studentDataForCard && <StudentCard {...studentDataForCard} />}
         <div className="flex flex-wrap space-x-3 md:space-x-2 sm:px-2 md:px-4 w-full md:w-4/5 mx-auto justify-center">
           {studentData && (

@@ -30,11 +30,9 @@ export default async function MyStudent({
       </div>
       <div className="flex flex-col space-y-8 justify-center">
         {studentDataForCard && <StudentCard {...studentDataForCard} />}
-        <div className="flex flex-wrap space-x-3 md:space-x-2 sm:px-2 md:px-4 w-full md:w-4/5 mx-auto justify-center">
-          {studentData && (
-            <StudentStatistics studentStats={studentData.answers} />
-          )}
-        </div>
+        {studentData && (
+          <StudentStatistics studentStats={studentData.answers} />
+        )}
         {studentDataForTask && <Tasks {...studentDataForTask} />}
       </div>
     </>

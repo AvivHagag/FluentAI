@@ -52,6 +52,7 @@ export default function GrammarContent() {
     if (userAnswer.trim().toLowerCase() === response.correct.toLowerCase()) {
       setAnswer({ hasAnswered: true, isCorrect: true });
       await studentSelfLearningAnswer(
+        level,
         "grammar",
         response.mistake,
         response.correct,
@@ -60,6 +61,7 @@ export default function GrammarContent() {
     } else {
       setAnswer({ hasAnswered: true, isCorrect: false });
       await studentSelfLearningAnswer(
+        level,
         "grammar",
         response.mistake,
         response.correct,
@@ -135,10 +137,12 @@ export default function GrammarContent() {
               <>
                 {!Error ? (
                   <div className="flex flex-col m-1 sm:m-2 mb-4">
-                    <Label className="flex justify-center items-center space-x-1 text-lg md:text-2xl text-lightRed">
-                      {formatTime(seconds)}
-                      <ClockIcon className="h-5 md:h-7 w-5 md:w-7 ml-2" />
-                    </Label>
+                    {!answer.hasAnswered && (
+                      <Label className="flex justify-center items-center space-x-1 text-lg md:text-2xl text-lightRed">
+                        {formatTime(seconds)}
+                        <ClockIcon className="h-5 md:h-7 w-5 md:w-7 ml-2" />
+                      </Label>
+                    )}
                     <div className="flex justify-between mb-1">
                       <div>
                         <div className="text-base sm:text-xl text-black">
@@ -185,11 +189,22 @@ export default function GrammarContent() {
                           placeholder="Type your answer here..."
                         />
                         {answer.isCorrect ? (
-                          <div
-                            className="text-lg sm:text-2xl text-green-400 font-semibold text-center py-2"
-                            dir="rtl"
-                          >
-                            צודק, תשובה נכונה ✓
+                          <div className="flex flex-col">
+                            <div
+                              className="text-lg sm:text-2xl animate-bounce text-green-400 font-semibold text-center pt-3 pb-2"
+                              dir="rtl"
+                            >
+                              צודק, תשובה נכונה ✓
+                            </div>
+                            <div
+                              className="text-lg sm:text-2xl text-mediumBeige text-center py-1"
+                              dir="rtl"
+                            >
+                              התשובה הנכונה היא :
+                            </div>
+                            <div className="text-black text-lg sm:text-2xl text-center">
+                              {response.correct}
+                            </div>
                           </div>
                         ) : (
                           <div className="flex flex-col">

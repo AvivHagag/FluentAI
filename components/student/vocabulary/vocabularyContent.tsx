@@ -8,9 +8,10 @@ import {
   hardAnswersVocabulary,
   mediumAnswersVocabulary,
 } from "@/lib/vocabulary-random";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 import Hint from "../Hint";
+import { ClockIcon } from "@heroicons/react/24/outline";
 
 interface VocabularyData {
   words: string[];
@@ -32,6 +33,7 @@ export default function VocabularyContent() {
   const [Error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hintText, setHintText] = useState<string>();
+  const [seconds, setSeconds] = useState(0);
   const Levels = [
     { name: "Easy", label: "Easy" },
     { name: "Medium", label: "Medium" },
@@ -102,6 +104,30 @@ export default function VocabularyContent() {
     }
   };
 
+  useEffect(() => {
+    let timer: string | number | NodeJS.Timeout | undefined;
+    if (!isLoading && !Error) {
+      timer = setInterval(() => {
+        setSeconds((prevSeconds) => prevSeconds + 1);
+      }, 1000);
+    } else {
+      clearInterval(timer);
+      setSeconds(0);
+    }
+    return () => clearInterval(timer);
+  }, [isLoading, Error]);
+
+  const formatTime = (totalSeconds: number) => {
+    const hours = Math.floor(totalSeconds / 3600)
+      .toString()
+      .padStart(2, "0");
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+    return `${hours}:${minutes}:${seconds}`;
+  };
+
   const handleNextQuestion = () => {
     setIsLoading(true);
     setUserAnswer("");
@@ -151,6 +177,10 @@ export default function VocabularyContent() {
               <>
                 {!Error ? (
                   <div className="flex flex-col m-1 sm:m-2 mb-4">
+                    <Label className="flex justify-center items-center space-x-1 text-lg md:text-2xl text-lightRed">
+                      {formatTime(seconds)}
+                      <ClockIcon className="h-5 md:h-7 w-5 md:w-7 ml-2" />
+                    </Label>
                     <div className="text-xs sm:text-xs md:text-sm text-black">
                       <span className="text-darkRed font-semibold">Word: </span>
                       {response.words[currentIndex]}

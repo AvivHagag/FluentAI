@@ -402,6 +402,9 @@ export const createTaskToStudent = async (
             type: "openQuestions",
             text: question.text,
             correctAnswer: question.correctAnswer.toString(),
+            falseAnswer1: question.falseAnswer1,
+            falseAnswer2: question.falseAnswer2,
+            falseAnswer3: question.falseAnswer3,
           },
         });
         break;
@@ -440,4 +443,112 @@ export const createTaskToStudent = async (
       },
     },
   });
+};
+
+export const getAllTaskByStudentID = async () => {
+  const session = await auth();
+  if (!session) {
+    return;
+  }
+  try {
+    const tasks = await db.teacherTask.findMany({
+      where: { student: { userId: session.user.id } },
+      include: {
+        questions: {
+          include: {
+            studentAnswers: true,
+          },
+        },
+      },
+      orderBy: { id: "asc" },
+    });
+    return tasks;
+  } catch (error) {
+    console.error("Error Getting Student Tasks", error);
+  }
+};
+
+export const saveStudentAnswerFromTask = async (
+  questionId: string,
+  answer: string,
+  correct: boolean
+) => {
+  const session = await auth();
+  if (!session) {
+    return;
+  }
+  try {
+    await db.studentAnswer.create({
+      data: {
+        givenAnswer: answer,
+        isCorrect: correct,
+        question: { connect: { id: questionId } },
+        student: { connect: { userId: session.user.id } },
+      },
+    });
+    if (session.user.id) {
+      await updateGrade(questionId, session.user.id);
+    }
+  } catch (error) {
+    console.error("Error Saving Student Answer", error);
+  }
+};
+
+export const updateGrade = async (questionId: string, userId: string) => {
+  try {
+    const teacherTask = await db.teacherTask.findFirst({
+      where: {
+        questions: {
+          some: {
+            id: questionId,
+          },
+        },
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    if (!teacherTask) {
+      console.error("TeacherTask not found for the given questionId");
+      return;
+    }
+
+    const studentAnswers = await db.studentAnswer.findMany({
+      where: {
+        student: {
+          userId: userId,
+        },
+        question: {
+          tasks: {
+            some: {
+              id: teacherTask.id,
+            },
+          },
+        },
+      },
+    });
+
+    const totalQuestions = teacherTask.questions.length;
+    const answeredQuestions = studentAnswers.length;
+
+    if (answeredQuestions < totalQuestions) {
+      return;
+    }
+
+    const correctAnswers = studentAnswers.filter(
+      (answer) => answer.isCorrect
+    ).length;
+    const grade = (100 / totalQuestions) * correctAnswers;
+    await db.teacherTask.update({
+      where: {
+        id: teacherTask.id,
+      },
+      data: {
+        grade: grade.toFixed(2),
+      },
+    });
+  } catch (error) {
+    console.error("Error updating grade", error);
+  }
 };

@@ -1,9 +1,6 @@
 import TitleAndButton from "@/components/headerNav/TitleAndButton";
 import { TaskCreator } from "@/components/teacher/task/taskCreator";
-import { Button } from "@/components/ui/button";
 import { getStudentById } from "@/data/user";
-import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 
 export default async function CreateTask({
   searchParams,

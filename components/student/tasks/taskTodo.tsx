@@ -6,6 +6,7 @@ import {
 } from "@prisma/client";
 import GrammarTask from "./grammarTask";
 import VocabularyTask from "./vocabularyTask";
+import OpenQuestionsTask from "./openQuestionsTask";
 
 interface TeacherTask extends PrismaTeacherTask {
   questions: Question[];
@@ -48,10 +49,14 @@ const TaskToDo: React.FC<TaskToDo> = ({
           resetCurrentQuestion={resetCurrentQuestion}
         />
       )}
-      {/* 
+
       {currentQuestion?.type === "openQuestions" && (
-        <OpenQuestionsTask question={currentQuestion} />
-      )} */}
+        <OpenQuestionsTask
+          question={currentQuestion}
+          handleFlag={handleFlag}
+          resetCurrentQuestion={resetCurrentQuestion}
+        />
+      )}
     </>
   );
 };

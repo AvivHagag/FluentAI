@@ -25,8 +25,7 @@ const grammarTask: React.FC<grammarTaskProps> = ({
   }>({ hasAnswered: false, isCorrect: false });
 
   const handleAnswerSubmit = async () => {
-    setIsLoading(true);
-    setUserAnswer("");
+    // setUserAnswer("");
     if (
       userAnswer.trim().toLowerCase() === question.correctAnswer.toLowerCase()
     ) {
@@ -38,7 +37,6 @@ const grammarTask: React.FC<grammarTaskProps> = ({
     }
     resetCurrentQuestion();
     handleFlag();
-    setIsLoading(false);
   };
 
   return (

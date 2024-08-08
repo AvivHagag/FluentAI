@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import {
   Question as PrismaQuestion,
   TeacherTask as PrismaTeacherTask,
@@ -37,12 +36,20 @@ const TaskLinks: React.FC<TaskLinksProps> = ({
     <>
       <Accordion type="single" collapsible className="w-full z-10">
         {tasks.map((task, index) => (
-          <AccordionItem key={task.id} value={task.id}>
+          <AccordionItem key={task.id} value={task.id.toString()}>
             <Fade>
               <AccordionTrigger className="text-base md:text-lg text-darkBeige border-b border-grayish">
                 משימה {index + 1}
               </AccordionTrigger>
               <AccordionContent>
+                {task.grade ? (
+                  <div
+                    className="text-sm md:text-base text-darkRed font-semibold text-center"
+                    dir="rtl"
+                  >
+                    ציון: {task.grade}
+                  </div>
+                ) : null}
                 <div className="space-y-2 text-center text-sm md:text-base">
                   {task.questions.map((question, qIndex) => {
                     const hasStudentAnswer = question.studentAnswers.some(
@@ -87,15 +94,6 @@ const TaskLinks: React.FC<TaskLinksProps> = ({
           </AccordionItem>
         ))}
       </Accordion>
-      <div className="flex justify-center items-end mt-auto">
-        <Button
-          variant={"outline"}
-          className="bg-lightBeige border border-lightRed rounded-full text-lightRed"
-          // onClick={() => handleNextQuestion()}
-        >
-          הגש לבדיקה
-        </Button>
-      </div>
     </>
   );
 };

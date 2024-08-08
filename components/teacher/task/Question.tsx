@@ -99,11 +99,10 @@ const QuestionComponent: React.FC<QuestionComponentProps> = ({
         break;
       case "openQuestions":
         newQuestion.text = `Text: ${responseOpenQuestions.paragraph}, Question: ${responseOpenQuestions.question}`;
-        newQuestion.correctAnswer =
-          responseOpenQuestions.answers[responseOpenQuestions.correctAnswer];
-        newQuestion.falseAnswer1 = responseOpenQuestions.answers[0];
-        newQuestion.falseAnswer2 = responseOpenQuestions.answers[1];
-        newQuestion.falseAnswer3 = responseOpenQuestions.answers[2];
+        newQuestion.correctAnswer = responseOpenQuestions.answers[0];
+        newQuestion.falseAnswer1 = responseOpenQuestions.answers[1];
+        newQuestion.falseAnswer2 = responseOpenQuestions.answers[2];
+        newQuestion.falseAnswer3 = responseOpenQuestions.answers[3];
         break;
     }
     setQuestionArr([...questionArr, newQuestion]);

@@ -31,7 +31,6 @@ const VocabularyTask: React.FC<VocabularyTaskProps> = ({
   }>({ hasAnswered: false, isCorrect: false });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fourAnswersArray, setFourAnswersArray] = useState<string[]>([]);
-  const router = useRouter();
   useEffect(() => {
     const initialAnswers = shuffleArray([
       question.correctAnswer,
@@ -47,7 +46,6 @@ const VocabularyTask: React.FC<VocabularyTaskProps> = ({
   const handleAnswerSubmit = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setIsLoading(true);
     const ChosenAnswer = event.target.value;
     setUserAnswer(ChosenAnswer);
     if (question.correctAnswer === ChosenAnswer) {
@@ -59,7 +57,6 @@ const VocabularyTask: React.FC<VocabularyTaskProps> = ({
     }
     resetCurrentQuestion();
     handleFlag();
-    setIsLoading(false);
   };
 
   return (

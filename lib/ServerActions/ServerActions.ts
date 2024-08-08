@@ -402,6 +402,9 @@ export const createTaskToStudent = async (
             type: "openQuestions",
             text: question.text,
             correctAnswer: question.correctAnswer.toString(),
+            falseAnswer1: question.falseAnswer1,
+            falseAnswer2: question.falseAnswer2,
+            falseAnswer3: question.falseAnswer3,
           },
         });
         break;
@@ -457,6 +460,7 @@ export const getAllTaskByStudentID = async () => {
           },
         },
       },
+      orderBy: { id: "asc" },
     });
     return tasks;
   } catch (error) {
@@ -482,8 +486,69 @@ export const saveStudentAnswerFromTask = async (
         student: { connect: { userId: session.user.id } },
       },
     });
-    console.log("Student answer saved successfully");
+    if (session.user.id) {
+      await updateGrade(questionId, session.user.id);
+    }
   } catch (error) {
     console.error("Error Saving Student Answer", error);
+  }
+};
+
+export const updateGrade = async (questionId: string, userId: string) => {
+  try {
+    const teacherTask = await db.teacherTask.findFirst({
+      where: {
+        questions: {
+          some: {
+            id: questionId,
+          },
+        },
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    if (!teacherTask) {
+      console.error("TeacherTask not found for the given questionId");
+      return;
+    }
+
+    const studentAnswers = await db.studentAnswer.findMany({
+      where: {
+        student: {
+          userId: userId,
+        },
+        question: {
+          tasks: {
+            some: {
+              id: teacherTask.id,
+            },
+          },
+        },
+      },
+    });
+
+    const totalQuestions = teacherTask.questions.length;
+    const answeredQuestions = studentAnswers.length;
+
+    if (answeredQuestions < totalQuestions) {
+      return;
+    }
+
+    const correctAnswers = studentAnswers.filter(
+      (answer) => answer.isCorrect
+    ).length;
+    const grade = (100 / totalQuestions) * correctAnswers;
+    await db.teacherTask.update({
+      where: {
+        id: teacherTask.id,
+      },
+      data: {
+        grade: grade.toFixed(2),
+      },
+    });
+  } catch (error) {
+    console.error("Error updating grade", error);
   }
 };

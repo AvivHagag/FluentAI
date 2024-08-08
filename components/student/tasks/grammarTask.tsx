@@ -6,13 +6,13 @@ import { Question } from "@prisma/client";
 import { useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 
-interface grammarTaskProps {
+interface GrammarTaskProps {
   question: Question;
   handleFlag: () => void;
   resetCurrentQuestion: () => void;
 }
 
-const grammarTask: React.FC<grammarTaskProps> = ({
+const GrammarTask: React.FC<GrammarTaskProps> = ({
   question,
   handleFlag,
   resetCurrentQuestion,
@@ -25,7 +25,6 @@ const grammarTask: React.FC<grammarTaskProps> = ({
   }>({ hasAnswered: false, isCorrect: false });
 
   const handleAnswerSubmit = async () => {
-    // setUserAnswer("");
     if (
       userAnswer.trim().toLowerCase() === question.correctAnswer.toLowerCase()
     ) {
@@ -115,4 +114,4 @@ const grammarTask: React.FC<grammarTaskProps> = ({
   );
 };
 
-export default grammarTask;
+export default GrammarTask;

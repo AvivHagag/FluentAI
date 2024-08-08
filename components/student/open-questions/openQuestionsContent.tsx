@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { OpenQuestionsRequest } from "@/lib/openai";
 import { studentSelfLearningAnswer } from "@/lib/ServerActions/ServerActions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 import Hint from "../Hint";
+import { ClockIcon } from "@heroicons/react/24/outline";
 
 export default function OpenQuestionsContent() {
   const [level, setLevel] = useState<string | null>(null);
@@ -23,6 +24,7 @@ export default function OpenQuestionsContent() {
   const [Error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hintText, setHintText] = useState<string>();
+  const [seconds, setSeconds] = useState(0);
   const Levels = [
     { name: "Easy", label: "Easy" },
     { name: "Medium", label: "Medium" },
@@ -73,6 +75,30 @@ export default function OpenQuestionsContent() {
     }
   };
 
+  useEffect(() => {
+    let timer: string | number | NodeJS.Timeout | undefined;
+    if (!isLoading && !Error) {
+      timer = setInterval(() => {
+        setSeconds((prevSeconds) => prevSeconds + 1);
+      }, 1000);
+    } else {
+      clearInterval(timer);
+      setSeconds(0);
+    }
+    return () => clearInterval(timer);
+  }, [isLoading, Error]);
+
+  const formatTime = (totalSeconds: number) => {
+    const hours = Math.floor(totalSeconds / 3600)
+      .toString()
+      .padStart(2, "0");
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+    return `${hours}:${minutes}:${seconds}`;
+  };
+
   const handleNextQuestion = () => {
     setIsLoading(true);
     setUserAnswer("");
@@ -117,6 +143,10 @@ export default function OpenQuestionsContent() {
               <>
                 {!Error ? (
                   <div className="flex flex-col m-1 sm:m-2 mb-4">
+                    <Label className="flex justify-center items-center space-x-1 text-lg md:text-2xl text-lightRed mb-2">
+                      {formatTime(seconds)}
+                      <ClockIcon className="h-5 md:h-7 w-5 md:w-7 ml-2" />
+                    </Label>
                     <div className="text-xs sm:text-xs md:text-sm text-black">
                       <span className="text-darkRed font-semibold">
                         Paragraph:{" "}

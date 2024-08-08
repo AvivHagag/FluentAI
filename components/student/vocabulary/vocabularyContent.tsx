@@ -88,6 +88,7 @@ export default function VocabularyContent() {
     ) {
       setAnswer({ hasAnswered: true, isCorrect: true });
       await studentSelfLearningAnswer(
+        level,
         "vocabulary",
         response.words[currentIndex],
         response.answers[currentIndex],
@@ -96,6 +97,7 @@ export default function VocabularyContent() {
     } else {
       setAnswer({ hasAnswered: true, isCorrect: false });
       await studentSelfLearningAnswer(
+        level,
         "vocabulary",
         response.words[currentIndex],
         response.answers[currentIndex],
@@ -177,10 +179,12 @@ export default function VocabularyContent() {
               <>
                 {!Error ? (
                   <div className="flex flex-col m-1 sm:m-2 mb-4">
-                    <Label className="flex justify-center items-center space-x-1 text-lg md:text-2xl text-lightRed">
-                      {formatTime(seconds)}
-                      <ClockIcon className="h-5 md:h-7 w-5 md:w-7 ml-2" />
-                    </Label>
+                    {!answer.hasAnswered && (
+                      <Label className="flex justify-center items-center space-x-1 text-lg md:text-2xl text-lightRed">
+                        {formatTime(seconds)}
+                        <ClockIcon className="h-5 md:h-7 w-5 md:w-7 ml-2" />
+                      </Label>
+                    )}
                     <div className="text-xs sm:text-xs md:text-sm text-black">
                       <span className="text-darkRed font-semibold">Word: </span>
                       {response.words[currentIndex]}

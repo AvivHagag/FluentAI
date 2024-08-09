@@ -102,6 +102,7 @@ export default function OpenQuestionsContent() {
   };
 
   const handleNextQuestion = () => {
+    setSeconds(0);
     setIsLoading(true);
     setUserAnswer("");
     setHintText("");

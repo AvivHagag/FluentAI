@@ -95,6 +95,7 @@ export default function GrammarContent() {
   };
 
   const handleNextQuestion = () => {
+    setSeconds(0);
     setIsLoading(true);
     setUserAnswer("");
     setAnswer({ hasAnswered: false, isCorrect: false });

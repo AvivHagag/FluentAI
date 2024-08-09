@@ -131,6 +131,7 @@ export default function VocabularyContent() {
   };
 
   const handleNextQuestion = () => {
+    setSeconds(0);
     setIsLoading(true);
     setUserAnswer("");
     setAnswer({ hasAnswered: false, isCorrect: false });

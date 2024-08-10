@@ -28,7 +28,7 @@ const allUsersComponent: React.FC<AllUsersComponentProps> = ({ Users }) => {
           className="text-דצ md:text-base text-darkRed mb-1 sm:mb-2"
           dir="rtl"
         >
-          בחירת תלמיד לפי שם או שם משפחה:
+          בחירת תלמיד לפי שם/שם משפחה/תפקיד:
         </div>
         <div className="flex flex-row items-center relative w-full" dir="rtl">
           <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
@@ -38,7 +38,7 @@ const allUsersComponent: React.FC<AllUsersComponentProps> = ({ Users }) => {
             type="text"
             value={searchTerm}
             onChange={handleSearchChange}
-            placeholder="חפש משתמש .."
+            placeholder="חפש משתמש או תפקיד.."
             className="rounded-xl shadow-xl pl-8 pr-10 w-full border-grayish"
           />
           <div className="absolute left-2 top-1/2 transform -translate-y-1/2">

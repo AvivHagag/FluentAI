@@ -50,6 +50,7 @@ const allUsersComponent: React.FC<AllUsersComponentProps> = ({ Users }) => {
         ) : (
           <UserList
             users={Users}
+            contact={true}
             onDelete={DeleteUser}
             searchTerm={searchTerm}
           />

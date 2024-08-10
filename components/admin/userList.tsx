@@ -6,10 +6,12 @@ import { useRouter } from "next/navigation";
 interface User {
   id: string;
   name: string | null;
+  email: string | null;
 }
 
 interface UserListProps {
   users: User[];
+  contact?: boolean;
   onApprove?: (id: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
   searchTerm: string;
@@ -17,6 +19,7 @@ interface UserListProps {
 
 const UserList: React.FC<UserListProps> = ({
   users,
+  contact,
   onApprove,
   onDelete,
   searchTerm,
@@ -71,6 +74,14 @@ const UserList: React.FC<UserListProps> = ({
                       onClick={() => handleAction(onApprove, user.id)}
                     >
                       אישור
+                    </Button>
+                  )}
+                  {contact && (
+                    <Button
+                      variant={"outline"}
+                      className="text-white border-transparent bg-mediumBeige hover:bg-darkBeige text-xs md:text-base"
+                    >
+                      <a href={`mailto:${user.email}`}>צור קשר</a>
                     </Button>
                   )}
                 </div>

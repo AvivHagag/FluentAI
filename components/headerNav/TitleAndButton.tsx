@@ -5,24 +5,49 @@ import { Button } from "../ui/button";
 
 interface TitleAndButtonProps {
   PageName: string;
+  PreviousPageUrl?: string;
+  PreviousPageName?: string;
+  SubTitle?: boolean;
 }
 
-const TitleAndButton: React.FC<TitleAndButtonProps> = ({ PageName }) => {
+const TitleAndButton: React.FC<TitleAndButtonProps> = ({
+  PageName,
+  PreviousPageUrl,
+  PreviousPageName,
+  SubTitle,
+}) => {
   return (
     <>
       <div className="flex justify-between items-center text-transparent bg-clip-text bg-gradient-to-r from-lightRed to-darkRed ">
-        <Link href={"/"}>
-          <Button
-            variant={"outline"}
-            className="bg-transparent border-lightRed hover:bg-mediumBeige text-lightRed hover:text-black"
-          >
-            <ArrowUturnLeftIcon width={22} height={22} className="mr-1" />
-            <div className="hidden md:block">חזרה לדף ראשי </div>
-            <div className="block md:hidden">חזרה </div>
-          </Button>
-        </Link>
+        {PreviousPageName && PreviousPageUrl ? (
+          <Link href={PreviousPageUrl}>
+            <Button
+              variant={"outline"}
+              className="bg-transparent border-lightRed hover:bg-mediumBeige text-lightRed hover:text-black"
+            >
+              <ArrowUturnLeftIcon width={22} height={22} className="mr-1" />
+              <div className="hidden md:block">חזרה ל{PreviousPageName} </div>
+              <div className="block md:hidden">חזרה</div>
+            </Button>
+          </Link>
+        ) : (
+          <Link href={"/"}>
+            <Button
+              variant={"outline"}
+              className="bg-transparent border-lightRed hover:bg-mediumBeige text-lightRed hover:text-black"
+            >
+              <ArrowUturnLeftIcon width={22} height={22} className="mr-1" />
+              <div className="hidden md:block">חזרה לדף ראשי </div>
+              <div className="block md:hidden">חזרה </div>
+            </Button>
+          </Link>
+        )}
         <div
-          className="pt-8 text-2xl sm:text-3xl lg:text-5xl text-center text-darkRed mb-4 sm:mb-8"
+          className={`${
+            !SubTitle
+              ? `text-lg sm:text-3xl lg:text-5xl`
+              : `text-lg sm:text-3xl`
+          } text-center text-darkRed`}
           dir="rtl"
         >
           {PageName}

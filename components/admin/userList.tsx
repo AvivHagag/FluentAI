@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 interface User {
   id: string;
   name: string | null;
-  email: string | null;
-  role: string | null;
+  email?: string | null;
+  role?: string | null;
 }
 
 interface UserListProps {

@@ -633,3 +633,20 @@ export const ApproveTask = async (id: number) => {
     console.error("Error Fetching All Teachers - ", error);
   }
 };
+
+export const getTeachersReviws = async () => {
+  try {
+    const Teachers = await db.user.findMany({
+      where: { role: "TEACHER" },
+      select: {
+        id: true,
+        name: true,
+        image: true,
+        teacher: { select: { rating: true } },
+      },
+    });
+    return Teachers;
+  } catch (error) {
+    console.error("Error Fetching All Teachers - ", error);
+  }
+};

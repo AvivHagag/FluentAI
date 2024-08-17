@@ -3,11 +3,11 @@ import HashLoader from "react-spinners/HashLoader";
 
 export default function Loading() {
   return (
-    <div className="flex flex-col items-center justify-center pb-2 space-x-2">
+    <div className="flex flex-col justify-center items-center min-h-screen">
       <p className="text-darkRed text-xxs py-2" dir="rtl">
         טוען ..
       </p>
-      <HashLoader color="#E85A4F" size={25} />
+      <HashLoader color="#E85A4F" size={40} />
     </div>
   );
 }

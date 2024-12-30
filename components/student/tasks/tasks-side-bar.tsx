@@ -75,7 +75,7 @@ const TaskSideBar: React.FC<TaskSideBarProps> = ({
         } sm:translate-x-0 sm:static sm:z-0`}
       >
         <div
-          className={`flex flex-col min-h-96 h-full py-12 px-1 sm:px-2 sm:py-3 text-lightRed text-sm md:text-xl whitespace-nowrap rounded-r-lg border-l border-mediumBeige ${
+          className={`flex flex-col min-h-96 h-auto py-12 px-1 sm:px-2 sm:py-3 text-lightRed text-sm md:text-xl whitespace-nowrap rounded-r-lg border-l border-mediumBeige ${
             isSidebarOpen
               ? "z-[500]"
               : "border-transparent bg-transparent sm:border-l sm:border-mediumBeige hidden sm:block"

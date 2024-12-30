@@ -38,9 +38,10 @@ const TaskLinks: React.FC<TaskLinksProps> = ({
   taskChosen,
   handleChooesn,
 }) => {
+  console.log(tasks);
   return (
     <>
-      <Accordion type="single" collapsible className="w-full z-10">
+      <Accordion type="single" collapsible className="w-full z-10 h-auto">
         {tasks.map((task, index) => {
           const taskDate = new Date(task.date);
           const currentDate = new Date();

@@ -528,7 +528,6 @@ export const getAllTaskByStudentID = async () => {
       },
       orderBy: { id: "asc" },
     });
-    console.log(tasks);
     return tasks;
   } catch (error) {
     console.error("Error Getting Student Tasks", error);

@@ -2,7 +2,6 @@
 import { Zoom } from "react-awesome-reveal";
 import Image from "next/image";
 import Soon from "@/public/SoonGif.webp";
-import Loading from "../loading";
 import HashLoader from "react-spinners/HashLoader";
 const StudentGame = () => {
   return (

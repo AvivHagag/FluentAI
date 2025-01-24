@@ -18,7 +18,7 @@ const CategoriesLinks: React.FC<CategoriesLinksProps> = ({
   const categories = [
     { name: "vocabulary", label: "אוצר מילים", icon: VocabularyIcon },
     { name: "grammar", label: "דקדוק", icon: GrammarIcon },
-    { name: "openQuestions", label: "שאלות פתוחות", icon: OpenQIcon },
+    { name: "openQuestions", label: "שאלות אמריקאיות", icon: OpenQIcon },
   ];
   const handleLink = (categoryName: string) => {
     handleChooesn(categoryName);
@@ -28,7 +28,7 @@ const CategoriesLinks: React.FC<CategoriesLinksProps> = ({
       {categories.map((category) => (
         <div
           key={category.name}
-          className={`group flex items-center cursor-pointer border border-lightRed rounded-full w-full px-2 py-0.5  
+          className={`group flex items-center cursor-pointer border border-lightRed rounded-full w-full px-1 py-0.5  
             ${
               categoryChosen === category.name
                 ? "bg-grayish/20 text-black border-current shadow-md hover:scale-105"

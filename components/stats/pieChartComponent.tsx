@@ -18,7 +18,7 @@ const PieChartComponent: React.FC<PieChartComponentProps> = ({ item }) => {
       case "grammar":
         return "דקדוק";
       case "openQuestions":
-        return "שאלות פתוחות";
+        return "שאלות אמריקאיות";
       default:
         return type;
     }

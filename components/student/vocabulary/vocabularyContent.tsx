@@ -35,9 +35,9 @@ export default function VocabularyContent() {
   const [hintText, setHintText] = useState<string>();
   const [seconds, setSeconds] = useState(0);
   const Levels = [
-    { name: "Easy", label: "Easy" },
-    { name: "Medium", label: "Medium" },
-    { name: "Hard", label: "Hard" },
+    { name: "קל", label: "Easy" },
+    { name: "בינוני", label: "Medium" },
+    { name: "קשה", label: "Hard" },
   ];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const handleLevelChosen = (LevelChosen: string) => {
@@ -151,18 +151,18 @@ export default function VocabularyContent() {
       <>
         {!level ? (
           <div className="flex flex-col m-1 sm:m-2 mb-4">
-            <div className="text-base sm:text-xl text-black">
-              Hello, choose the vocabulary level please.
+            <div className="text-base sm:text-xl text-black" dir="rtl">
+              היי, אנא בחר את רמת הקושי
             </div>
-            <div className="flex flex-col sm:flex-row">
+            <div className="flex flex-col sm:flex-row" dir="rtl">
               {Levels.map((level) => (
                 <Button
                   key={level.label}
                   variant="outline"
-                  className="m-2 border-mediumBeige hover:bg-grayish text-mediumBeige"
+                  className="my-2 ml-2 border-mediumBeige hover:bg-grayish text-mediumBeige"
                   onClick={() => handleLevelChosen(level.label)}
                 >
-                  {level.label}
+                  {level.name}
                 </Button>
               ))}
             </div>

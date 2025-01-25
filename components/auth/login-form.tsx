@@ -78,7 +78,6 @@ const LoginForm = () => {
         headerTitle="התחברות"
         backButtonLabel="אין לך משתמש עדין?"
         backButtonHref="/register"
-        showSocial
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

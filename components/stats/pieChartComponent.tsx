@@ -31,7 +31,7 @@ const PieChartComponent: React.FC<PieChartComponentProps> = ({ item }) => {
   return (
     <div className="mx-auto space-y-12">
       <div className="space-y-1">
-        <h3 className="text-center text-xs md:text-xl lg:text-2xl 2xl:text-3xl text-grayish">
+        <h3 className="text-center text-xs md:text-xl lg:text-2xl 2xl:text-3xl text-grayish whitespace-nowrap">
           {getTypeLabel(item.type)}
         </h3>
         <div className="flex justify-center">

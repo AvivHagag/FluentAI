@@ -109,7 +109,10 @@ export default function GrammarContent() {
       <>
         {!level ? (
           <div className="flex flex-col m-1 sm:m-2 mb-4">
-            <div className="text-base sm:text-xl text-black" dir="rtl">
+            <div
+              className="text-base sm:text-xl text-black text-center md:text-right"
+              dir="rtl"
+            >
               היי, אנא בחר את רמת הקושי
             </div>
             <div className="flex flex-col sm:flex-row" dir="rtl">

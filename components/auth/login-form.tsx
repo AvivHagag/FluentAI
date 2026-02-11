@@ -21,6 +21,7 @@ import { login } from "@/actions/login";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { RecruiterModal } from "./recruiter-modal";
+import { RecruiterModal2 } from "./recruiter-modal2";
 import recruiterIcon from "@/public/recruiterIcon.png";
 import Image from "next/image";
 import { UsersIcon } from "@heroicons/react/24/outline";
@@ -31,8 +32,11 @@ const LoginForm = () => {
     searchParam.get("error") === "OAuthAccountNotLinked"
       ? "אנא התחבר עם האימייל הזה בדרך אחרת"
       : "";
-  const recruiterParam = searchParam.get("recruiterRef");
-  const modalRecruiterOpen = recruiterParam !== null;
+  const recruiterRef = searchParam.get("recruiterRef");
+  const recruiterRef2 = searchParam.get("recruiterRef2");
+  const isRecruiterRef = recruiterRef !== null;
+  const isRecruiterRef2 = !isRecruiterRef && recruiterRef2 !== null;
+  const modalRecruiterOpen = isRecruiterRef || isRecruiterRef2;
   const [showModal, setShowModal] = useState<boolean>(!!modalRecruiterOpen);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -64,9 +68,18 @@ const LoginForm = () => {
 
   return (
     <>
-      {modalRecruiterOpen && (
+      {isRecruiterRef && (
         <div className="px-2">
           <RecruiterModal
+            open={showModal}
+            onClose={() => setShowModal(false)}
+            onSelectAccount={handleSelectAccount}
+          />
+        </div>
+      )}
+      {isRecruiterRef2 && (
+        <div className="px-2">
+          <RecruiterModal2
             open={showModal}
             onClose={() => setShowModal(false)}
             onSelectAccount={handleSelectAccount}
